@@ -1395,7 +1395,8 @@
     .shop .salerail--mini .sales__progress { margin-top: 14px; }
   }   /* a plain (non-sale) price in this rail card must read like an ordinary price, not a discount */
 </style>
-<script src="/assets/catalog.js?v=20261025a"></script>
+<script src="/assets/catalog.js?v=20261114rail"></script>
+<script src="/assets/women-sale-rail.js?v=16" defer></script>
 <script>
 (() => {
   'use strict';
@@ -1712,10 +1713,9 @@
       if (active === 'new') items = NEW_LIST.filter(k => CATALOG[k] && genderOf(CATALOG[k]).includes(gender)).map(k => [k, CATALOG[k]]);   // NEW COLLECTION tab: every piece with the NEW COLLECTION label
       if (active === 'jackets' && gender === 'women') items = (WOMEN_FEATURED.jackets || []).map(k => items.find(([x]) => x === k)).filter(Boolean);   // women JACKETS: only the Logo Windbreakers
       if (active === 'sales' && gender === 'women') {
-        // Women > Sale shows only these 5 products, in this order, regardless of what else
-        // (e.g. unisex accessories also tagged 'sales') would otherwise match the generic filter.
-        const WOMEN_SALE_KEEP = ['w-delulu-pardesiu', 'w-purple-sweatpants', 'van-gogh-jacket', 'w-transparent-jean'];
-        items = WOMEN_SALE_KEEP.map(k => items.find(([x]) => x === k)).filter(Boolean);
+        grid.classList.add('shop__grid--sales');
+        grid.appendChild(document.createElement('bym-women-sale-rail'));
+        return;
       }
       if (!items.length) { grid.innerHTML = '<p class="shop__empty">COMING SOON</p>'; return; }
       if (active === 'denim') {
