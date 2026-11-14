@@ -1933,7 +1933,8 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "unavailable": [],
       "colours": [{"id":"black","name":"Black","hex":"#111111"}],
       "chart": ["XS-S","M-L"],
-      "gallery": [{"src":"assets/img/gallery/w-tiramisu-hoodie-black-1-a2696001.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-black-2-8361f5a2.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-black-3-25ed4f5f.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-tiramisu-hoodie-black-4-0c4f7e50.webp","w":1024,"h":1524}]
+      "gallery": [{"src":"assets/img/gallery/w-tiramisu-hoodie-black-1-a2696001.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-black-2-8361f5a2.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-black-3-25ed4f5f.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-tiramisu-hoodie-black-4-0c4f7e50.webp","w":1024,"h":1524}],
+      "cardGallery": [{"src":"assets/img/gallery/w-tiramisu-hoodie-black-2-8361f5a2.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-black-1-a2696001.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-black-3-25ed4f5f.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-tiramisu-hoodie-black-4-0c4f7e50.webp","w":1024,"h":1524}]
     },
     "w-tiramisu-hoodie-white": {
       "gender": "women",
@@ -1954,6 +1955,7 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "gender": "women",
       "id": "bymarccc:w-tiramisu-hoodie-burgundy",
       "title": "OVERSIZED HOODIE",
+      "membersOnly": true,
       "price": 450,
       "currency": "RON",
       "cut": "Womenswear",
@@ -1978,7 +1980,8 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "unavailable": [],
       "colours": [{"id":"grey","name":"Grey","hex":"#b9b9b9"}],
       "chart": ["XS-S","M-L"],
-      "gallery": [{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-1-e525c458.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-2-50b864a4.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-3-18821d0b.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-4-34c9f1f7.webp","w":1024,"h":1524}]
+      "gallery": [{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-1-e525c458.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-2-50b864a4.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-3-18821d0b.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-4-34c9f1f7.webp","w":1024,"h":1524}],
+      "cardGallery": [{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-2-50b864a4.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-1-e525c458.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-3-18821d0b.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-4-34c9f1f7.webp","w":1024,"h":1524}]
     },
     "w-tiramisu-hoodie-pink": {
       "gender": "women",
