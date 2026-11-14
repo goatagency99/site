@@ -57,7 +57,7 @@
       const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
       if (!mixCtx) mixCtx = new AC();
       if ((mixCtx.state === 'suspended' || mixCtx.state === 'interrupted') && !(mixDecks && mixDecks.every(d => d.unlocked))) mixCtx.resume().catch(() => {});
-      if (!mixDecks) mixDecks = [0, 1].map(() => { const g = new Audio(); g.crossOrigin = 'anonymous'; g.preload = 'auto'; g.playsInline = true; const n = mixCtx.createMediaElementSource(g), gn = mixCtx.createGain(), an = mixCtx.createAnalyser(); an.fftSize = 2048; gn.gain.value = 0; n.connect(gn); n.connect(an); gn.connect(mixCtx.destination); return { g, gn, an, unlocked: false, busy: false }; });
+      if (!mixDecks) mixDecks = [0, 1].map(() => { const g = new Audio(); g.crossOrigin = 'anonymous'; g.preload = 'auto'; g.playsInline = true; g.addEventListener('ended', () => { setTimeout(() => { try { assert(); } catch (e) {} }, 100); setTimeout(() => { try { assert(); } catch (e) {} }, 1200); }); const n = mixCtx.createMediaElementSource(g), gn = mixCtx.createGain(), an = mixCtx.createAnalyser(); an.fftSize = 2048; gn.gain.value = 0; n.connect(gn); n.connect(an); gn.connect(mixCtx.destination); return { g, gn, an, unlocked: false, busy: false }; });
       mixDecks.forEach(d => { if (d.unlocked || d.busy || mixing) return; d.busy = true; d.g.src = MIX_SILENT; const pr = d.g.play(); (pr && pr.then ? pr : Promise.resolve()).then(() => { d.unlocked = true; d.g.pause(); }).catch(() => {}).finally(() => { d.busy = false; mixSleep(); }); });
     } catch (e) {}
   }
@@ -116,7 +116,17 @@
         if (!out.g.seeking && out.g.readyState >= 3 && out.g.currentTime > startT + 0.15) {
           const lag = audio.currentTime - out.g.currentTime;
           if (lag > 0.3 && fixes < 2 && el < 2500 && inBuf(audio.currentTime + 0.3)) { fixes++; L('deck behind by ' + lag.toFixed(2) + ' s → jump to real'); try { out.g.currentTime = audio.currentTime + 0.25; startT = out.g.currentTime; } catch (e) {} setTimeout(step, 80); return; }
-          L('deck moving after ' + Math.round(el) + ' ms, lag=' + lag.toFixed(2)); setTimeout(cb, 100); return;
+          L('deck moving after ' + Math.round(el) + ' ms, lag=' + lag.toFixed(2));
+          /* on iPhone the position moves BEFORE the sound reaches Web Audio: wait for the first non-zero samples; only a deck that stays digitally silent after 1.5 s of really playing is judged dead (by cb) */
+          const tm = performance.now(), tm0 = out.g.currentTime;
+          const settle = () => {
+            if (mixPrep !== P || !mixing) return;
+            const w = performance.now() - tm;
+            if (!mixDead(out)) { L('deck A audible after +' + Math.round(w) + ' ms'); cb(); return; }
+            if ((w > 1500 && out.g.currentTime - tm0 > 1) || w > 3500 || !(audio.duration - audio.currentTime > 1.5)) { cb(); return; }
+            setTimeout(settle, 50);
+          };
+          setTimeout(settle, 60); return;
         }
         if (el > 3500 || !(audio.duration - audio.currentTime > 1.5)) { L('FAIL deck never moved: seeking=' + out.g.seeking + ' rs=' + out.g.readyState + ' t=' + out.g.currentTime.toFixed(2)); mixFailSrc = audio.currentSrc || audio.src; mixStop(); return; }
         setTimeout(step, 50);
