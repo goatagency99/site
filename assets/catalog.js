@@ -36,7 +36,7 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
   "collections": [{"key":"denim","label":"DENIM"},{"key":"tops","label":"TOPS"},{"key":"bottoms","label":"BOTTOMS"},{"key":"accessories","label":"ACCESSORIES"},{"key":"sales","label":"SALES"},{"key":"looks","label":"LOOKBOOK"}],
   "womenCollections": [{"key":"tops","label":"TOPS"},{"key":"bottoms","label":"BOTTOMS"},{"key":"accessories","label":"ACCESSORIES"},{"key":"sales","label":"SALES"},{"key":"looks","label":"LOOKBOOK"}],
   "customizeCollections": [{"key":"bags","label":"BAGS"}],
-  "womenFeatured": {"tops":["w-burgundy-zip-hoodie","w-simple-hoodie-skyblue","w-sporty-top-ivory","w-sporty-top","w-burgundy-baby-top","w-white-baby-top","w-burgundy-burberry-windbreaker","w-blue-zip-hoodie","w-hot-pink-zip-hoodie","w-red-zip-hoodie","w-pink-zip-hoodie","w-delulu-blazer-2","w-muse-blazer","w-hg-delulu-blazer","w-burgundy-long-sleeve","w-fuchsia-baby-top","w-blue-baby-top","w-red-baby-top","w-white-baby-top-1","w-pink-baby-top","w-no-bra-tank-top","w-black-windbreaker"],"bottoms":["w-mini-bag-jeans-blackwash-black","w-mini-bag-jeans-burgundy","w-lace-jean","w-transparent-jean","w-black-wind-pants","w-burgundy-wind-pants","w-grey-pants","w-pink-pants","w-logo-flare-jeans","w-logo-flare-leggings","w-walking-art-black-jeans","w-logo-leggings","w-mini-bag-jeans-blackwash-burgundy","w-mini-bag-jeans-black","w-red-pants","w-black-pants"],"jackets":["w-white-logo-windbreaker","w-black-logo-windbreaker"],"accessories":["w-white-shoulder-bag","w-burgundy-shoulder-bag"]},
+  "womenFeatured": {"tops":["w-burgundy-zip-hoodie","w-skyblue-hoodie","w-sporty-top-ivory","w-sporty-top","w-burgundy-baby-top","w-white-baby-top","w-burgundy-burberry-windbreaker","w-blue-zip-hoodie","w-hot-pink-zip-hoodie","w-red-zip-hoodie","w-pink-zip-hoodie","w-delulu-blazer-2","w-muse-blazer","w-hg-delulu-blazer","w-burgundy-long-sleeve","w-fuchsia-baby-top","w-blue-baby-top","w-red-baby-top","w-white-baby-top-1","w-pink-baby-top","w-no-bra-tank-top","w-black-windbreaker"],"bottoms":["w-mini-bag-jeans-blackwash-black","w-mini-bag-jeans-burgundy","w-lace-jean","w-transparent-jean","w-black-wind-pants","w-burgundy-wind-pants","w-grey-pants","w-pink-pants","w-logo-flare-jeans","w-logo-flare-leggings","w-walking-art-black-jeans","w-logo-leggings","w-mini-bag-jeans-blackwash-burgundy","w-mini-bag-jeans-black","w-red-pants","w-black-pants"],"jackets":["w-white-logo-windbreaker","w-black-logo-windbreaker"],"accessories":["w-white-shoulder-bag","w-burgundy-shoulder-bag"]},
   "tryOnGarments": {"black-baby-top":{"type":"womens_baby_top","label":"women's black baby top: short, fitted, short-sleeve black cotton top with a fine rib, round neck; the hem sits slightly above the belly button","category":"tops","colour":"black","views":{"front":"assets/try-on/black-baby-top/garment.png"},"fitReference":"assets/try-on/black-baby-top/fit-reference.jpg","print":{"placement":"centred on the chest, a little below the neckline","width":0.3}}},
   "products": {
 
@@ -1905,27 +1905,20 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "chart": ["XS-S","M-L"],
       "gallery": [{"src":"assets/img/gallery/w-white-hoodie-logo-0887f864.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-2-6c38f1e9.webp","w":900,"h":1304},{"src":"assets/img/gallery/w-white-hoodie-happy-hoes-81d18cb2.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-boys-lie-50e5d0ec.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-paris-a5d47232.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-muse-fe18d1b2.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-delulu-7fe157a1.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-yacht-759ef903.webp","w":1414,"h":2049}]
     },
-    "w-simple-hoodie-skyblue": {
-      "designs": ["Happy Hoes","Hot Girls","Tiramisu","Muse","Delulu"],
-      "designImages": {},
-      "designGalleries": {},
+    "w-skyblue-hoodie": {
       "gender": "women",
-      "model": {"height":177,"weight":53,"size":"M","modelMedia":[0],"text":"Model is 177 cm and 53 kg and wears size M"},
-      "id": "bymarccc:w-simple-hoodie-skyblue",
-      "title": "SIMPLE HOODIE",
-      "price": 350,
+      "id": "bymarccc:w-skyblue-hoodie",
+      "title": "OVERSIZED HOODIE",
+      "price": 450,
       "currency": "RON",
-      "cut": "Relaxed fit hoodie",
+      "cut": "Womenswear",
       "collections": ["tops"],
-      "details": ["Relaxed fit hoodie with a front kangaroo pocket","Available with Happy Hoes, Hot Girls, Tiramisu, Muse or Delulu design","Sky blue · 100% organic cotton","All clothing is custom made."],
-      "description": "A relaxed-fit sky blue women's hoodie, available with five bymarccc designs.",
+      "details": ["Oversized hoodie with dropped shoulders and a ribbed hem and cuffs","\"Hot girls...\" on the chest and \"Hot girls eat Tiramisu\" on the back","Sky blue","All clothing is custom made.","100% Organic Cotton"],
+      "description": "An oversized sky blue hoodie from the bymarccc womenswear collection: \"Hot girls...\" on the chest, \"Hot girls eat Tiramisu\" on the back.",
       "unavailable": [],
       "colours": [{"id":"skyblue","name":"Sky Blue","hex":"#dceaf0"}],
-      "chart": ["S","M","L"],
-      "gallery": [{"src":"assets/img/gallery/simple-hoodie-skyblue-tiramisu-front-v1.webp","w":1024,"h":1536},{"src":"assets/img/gallery/simple-hoodie-skyblue-tiramisu-back-detail-v1.webp","w":1024,"h":1536},{"src":"assets/img/gallery/simple-hoodie-skyblue-tiramisu-back-full-v1.webp","w":1024,"h":1536},{"src":"assets/img/gallery/simple-hoodie-skyblue-tiramisu-flat-front-v1.webp","w":1024,"h":1524},{"src":"assets/img/gallery/simple-hoodie-skyblue-tiramisu-flat-back-v1.webp","w":1024,"h":1524}],
-      "cardGallery": [{"src":"assets/img/gallery/simple-hoodie-skyblue-tiramisu-front-v1.webp","w":1024,"h":1536},{"src":"assets/img/gallery/simple-hoodie-skyblue-tiramisu-back-detail-v1.webp","w":1024,"h":1536},{"src":"assets/img/gallery/simple-hoodie-skyblue-tiramisu-back-full-v1.webp","w":1024,"h":1536},{"src":"assets/img/gallery/simple-hoodie-skyblue-tiramisu-flat-front-v1.webp","w":1024,"h":1524},{"src":"assets/img/gallery/simple-hoodie-skyblue-tiramisu-flat-back-v1.webp","w":1024,"h":1524}],
-      "mockup": "assets/img/gallery/simple-hoodie-skyblue-tiramisu-flat-front-v1.webp",
-      "fullBody": 2
+      "chart": ["XS-S","M-L"],
+      "gallery": [{"src":"assets/img/gallery/w-skyblue-hoodie-1-bc29a54a.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-skyblue-hoodie-2-397b63a2.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-skyblue-hoodie-3-9d6a3a0b.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-skyblue-hoodie-4-8a97f57b.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-skyblue-hoodie-5-45912e09.webp","w":1024,"h":1536}]
     },
     "w-white-tee": {
       "designs": ["Blank","Logo","Lady on the street","Hot Girls","Muse","Delulu","PARIS","Barbie","Happy Hoes","Boys Lie","Art"],
