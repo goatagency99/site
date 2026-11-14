@@ -1837,6 +1837,14 @@
     const h = JSON.parse(sessionStorage.getItem('bym.shopTab') || 'null'); sessionStorage.removeItem('bym.shopTab');
     if (h) { const sec = document.getElementById(h.gender === 'women' ? 'shopWomen' : 'shop'); sec.querySelector(`.shop__tab[data-key="${h.col}"]`)?.click(); sec.scrollIntoView(); }
   } catch {}
+  try {   // short links (/lookbook, /bottomwomenswear ...) arrive as /?go=women-bottoms[-denim]
+    const go = new URLSearchParams(location.search).get('go');
+    if (go) {
+      const [gd, col, sb] = go.split('-'), sec = document.getElementById(gd === 'men' ? 'shop' : 'shopWomen');
+      if (sec) { sec.querySelector(`.shop__tab[data-key="${col}"]`)?.click(); if (sb) [...sec.querySelectorAll('button')].find(x => x.textContent.trim().toLowerCase() === sb)?.click(); setTimeout(() => sec.scrollIntoView(), 50); }
+      history.replaceState(null, '', location.pathname);
+    }
+  } catch {}
 
   /* ------------------------------------------------------------------
      Return-to-spot: opening a product from the homepage and then going
