@@ -571,6 +571,12 @@ html.bym-memlock #pPrice, html.bym-memlock #barPrice { display: none !important;
 .pdp-drow__l { justify-content: flex-end; } .pdp-drow__r { justify-content: flex-start; } .pdp-drow__m { gap: 5px; margin: 0 3px; }
 .pdp-designs .pdp-size.pdp-size--mid { height: 32px; min-width: 0; padding: 0 13px; font-size: 13px; font-weight: 500; letter-spacing: .03em; border-radius: 9px; text-transform: none; border-color: #111; }
 .pdp-designs .pdp-size.pdp-size--mid[aria-checked="true"] { background: #111; color: #fff; }
+/* tablets / small laptops (900–1359 px): the info column is only ~180–370 px wide, so the design pills and the sizes wrap onto more rows instead of running off the screen */
+@media (min-width: 900px) and (max-width: 1359px) {
+  .pdp-designs .pdp-drow { flex-wrap: wrap; }
+  .pdp-designs .pdp-drow--sizes { display: flex; flex-wrap: wrap; justify-content: center; }
+  .pdp-drow__l, .pdp-drow__r { flex-wrap: wrap; justify-content: center; }
+}
 .pdp-sizemsg { width: 100%; margin: 2px 0 0; text-align: center; font-size: 12px; color: #c8102e; min-height: 0; }
 .pdp-sizemsg:empty { display: none; }
 @media (min-width: 900px) { .pdp-family { margin: 0 0 14px; } }
