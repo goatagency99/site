@@ -2057,6 +2057,21 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "gallery": [{"src":"assets/img/gallery/w-crochet-jeans-1-7d434371.webp","w":1024,"h":1534}],
       "needsBody": true
     },
+    "w-sequin-lace-short": {
+      "gender": "women",
+      "id": "bymarccc:w-sequin-lace-short",
+      "title": "Sequin Lace Short",
+      "price": 300,
+      "currency": "RON",
+      "cut": "Womenswear",
+      "collections": ["bottoms"],
+      "details": ["All clothing is custom made.","100% Organic Cotton"],
+      "description": "Black sequin shorts with a lace hem, sheer ruffle waistband and bymarccc tag.",
+      "unavailable": [],
+      "colours": [{"id":"black","name":"Black","hex":"#111111"}],
+      "chart": ["XS-S","M-L"],
+      "gallery": [{"src":"assets/img/gallery/w-sequin-lace-short-1-461d8bbf.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sequin-lace-short-2-c63cada0.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sequin-lace-short-3-1aaf051e.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sequin-lace-short-4-7866d1e0.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sequin-lace-short-5-2a463fa3.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sequin-lace-short-6-8a8b78c5.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sequin-lace-short-7-2ca3cfcd.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sequin-lace-short-8-8b94a419.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sequin-lace-short-9-f940a1b1.webp","w":1024,"h":1534}]
+    },
     "w-sequin-mini-skirt": {
       "gender": "women",
       "id": "shopify:sequin-mini-skirt",
