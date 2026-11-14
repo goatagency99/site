@@ -32,7 +32,8 @@
   const update = () => {
     if (!hasMS) return;
     const t = cur(); const [st, sa] = t ? split(t.title) : ['', ''];
-    const title = ($('miniTitle')?.textContent || '').trim() || st, artist = ($('miniArtist')?.textContent || '').trim() || sa;
+    const H = window.__bymLockHold;   // during the DJ mix the lock screen keeps the OLD song's text until the last 6 s of it
+    const title = H ? H.title : ($('miniTitle')?.textContent || '').trim() || st, artist = H ? H.artist : ($('miniArtist')?.textContent || '').trim() || sa;
     try { navigator.mediaSession.metadata = new MediaMetadata({ title: title && title !== '—' ? title : 'bymarccc', artist: artist || 'bymarccc', album: 'bymarccc', artwork: ART }); } catch (e) {}
   };
   const assert = () => { if (!hasMS || audio.paused || idle()) return; update(); navigator.mediaSession.playbackState = 'playing'; };
@@ -77,6 +78,7 @@
     if (P && mixing) { try { const gi = P.inn.g; if (!gi.paused && audio.duration && gi.currentTime - audio.currentTime > 0.3 && gi.currentTime < audio.duration - 1) audio.currentTime = gi.currentTime; } catch (e) {} }
     audio.muted = false;
     mixing = false; mixAbortPrep();
+    window.__bymLockHold = null;
     assert();
   }
   function mixPrepare() {   // ≤25 s before the end: buffer this song (near its end) on deck A and the next one on deck B, silently
@@ -143,6 +145,8 @@
         const rest = Math.max(2, Math.min(MIX_S, (out.g.duration || audio.duration) - out.g.currentTime));
         out.gn.gain.value = 1; audio.muted = true;
         inn.gn.gain.value = 0; const inn0 = inn.g.currentTime; inn.g.play().catch(() => {});
+        { const t0 = cur(), [s0, a0] = t0 ? split(t0.title) : ['', '']; window.__bymLockHold = { title: ($('miniTitle')?.textContent || '').trim() || s0, artist: ($('miniArtist')?.textContent || '').trim() || a0 }; }   // lock screen keeps the old song's text ...
+        setTimeout(() => { if (mixPrep === P && window.__bymLockHold) { window.__bymLockHold = null; assert(); } }, Math.max(0, (rest - 6) * 1000));   // ... until the last 6 s, then shows the next song
         play(P.nxt); audio.muted = true;
         /* fades on the audio clock, so they also happen with the phone locked */
         const N = 64, fOut = new Float32Array(N), fIn = new Float32Array(N);
@@ -171,5 +175,6 @@
   });
   audio.addEventListener('play', () => { if (!idle()) setTimeout(mixEnsure, 0); });
   audio.addEventListener('pause', () => { if (mixGhost && performance.now() - mixSwitchAt > 1500) mixStop(); });
+  setInterval(() => { if (mixPrep || mixing) assert(); }, 1500);   // last ~25 s: put the lock-screen text back right away whenever iPhone drops it
   window.__bymMixLiteState = () => ({ ctx: mixCtx && mixCtx.state, ready: mixReady(), prep: !!mixPrep, mixing, out: mixPrep && +mixPrep.out.gn.gain.value.toFixed(2), inn: mixPrep && +mixPrep.inn.gn.gain.value.toFixed(2), muted: audio.muted });
 })();

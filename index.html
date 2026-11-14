@@ -3320,6 +3320,7 @@
     if (P && mixing) { try { const gi = P.inn.g; if (!gi.paused && audio.duration && gi.currentTime - audio.currentTime > 0.3 && gi.currentTime < audio.duration - 1) audio.currentTime = gi.currentTime; } catch {} }   // real player lagging behind the deck → catch it up (never jump back)
     audio.muted = false;
     mixing = false; mixAbortPrep();
+    window.__bymLockHold = null;
     window.__bymNowPlaying?.();   // the decks played → iPhone dropped the lock-screen info; put the title + alien artwork back
   }
   /* ≤25 s before the end: load this song (near its end) on deck A and the next song on deck B, silently, so both are buffered */
@@ -3389,6 +3390,8 @@
       const rest = Math.max(2, Math.min(MIX_S, (out.g.duration || audio.duration) - out.g.currentTime));
       out.gn.gain.value = 1; audio.muted = true;           // seamless: deck A now carries the old song
       inn.gn.gain.value = 0; const inn0 = inn.g.currentTime; inn.g.play().catch(() => {});
+      window.__bymLockHold = { title: (miniTitle.textContent || '').trim(), artist: (miniArtist.textContent || '').trim() };   // lock screen keeps the old song's text ...
+      setTimeout(() => { if (mixPrep === P && window.__bymLockHold) { window.__bymLockHold = null; window.__bymNowPlaying && window.__bymNowPlaying(); } }, Math.max(0, (rest - 6) * 1000));   // ... until the last 6 s, then shows the next song
       forcedNext = mixNextIdx; miniStep(1); audio.muted = true;   // real player → next song, muted until the blend ends
       /* the fades run on the audio clock (not requestAnimationFrame), so they also happen with the phone locked */
       const N = 64, fOut = new Float32Array(N), fIn = new Float32Array(N);
@@ -3409,6 +3412,7 @@
     }, { once: true });
     out.g.play().catch(() => { clearTimeout(abort); if (mixPrep === P) { mixFailSrc = audio.currentSrc || audio.src; mixStop(); } });
   }
+  window.__bymMixBusy = () => !!(mixPrep || mixing);
   window.__bymMix = () => ({ ctx: mixCtx && mixCtx.state, ready: mixReady(), prep: !!mixPrep, mixing, out: mixPrep && +mixPrep.out.gn.gain.value.toFixed(2), inn: mixPrep && +mixPrep.inn.gn.gain.value.toFixed(2), muted: audio.muted, oT: mixPrep && +mixPrep.out.g.currentTime.toFixed(1), oP: mixPrep && mixPrep.out.g.paused, iT: mixPrep && +mixPrep.inn.g.currentTime.toFixed(1), iP: mixPrep && mixPrep.inn.g.paused });
   /* ?mixdebug=1 → READ-ONLY on-screen diagnostics for the mix (changes nothing: only reads state and listens to events) */
   if (/[?&]mixdebug=1(&|$)/.test(location.search)) (() => {
@@ -5025,7 +5029,8 @@ html.is-vp-drag, html.is-vp-drag * { -webkit-user-select: none !important; user-
   ];
   const text = id => (document.getElementById(id)?.textContent || '').trim();
   const update = () => {
-    const title = text('miniTitle'), artist = text('miniArtist');
+    const H = window.__bymLockHold;   // during the DJ mix the lock screen keeps the OLD song's text until the last 6 s of it
+    const title = H ? H.title : text('miniTitle'), artist = H ? H.artist : text('miniArtist');
     navigator.mediaSession.metadata = new MediaMetadata({ title: title && title !== '—' ? title : 'bymarccc', artist: artist || 'bymarccc', album: 'bymarccc', artwork: ART });
   };
   /* iPhone drops the lock-screen info whenever another <audio> plays (the DJ-mix decks) or the source changes,
@@ -5038,6 +5043,7 @@ html.is-vp-drag, html.is-vp-drag * { -webkit-user-select: none !important; user-
   audio.addEventListener('loadedmetadata', update);
   document.addEventListener('visibilitychange', () => { if (document.hidden) assert(); });
   setInterval(assert, 15000);
+  setInterval(() => { if (window.__bymMixBusy && window.__bymMixBusy()) assert(); }, 1500);   // last ~25 s (prepare + blend): iPhone drops the text whenever the decks start/stop → put it back right away
   const set = (a, fn) => { try { navigator.mediaSession.setActionHandler(a, fn); } catch {} };
   set('play', () => audio.play().catch(() => {}));
   set('pause', () => audio.pause());
