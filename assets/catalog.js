@@ -36,7 +36,7 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
   "collections": [{"key":"denim","label":"DENIM"},{"key":"tops","label":"TOPS"},{"key":"bottoms","label":"BOTTOMS"},{"key":"accessories","label":"ACCESSORIES"},{"key":"sales","label":"SALES"},{"key":"looks","label":"LOOKBOOK"}],
   "womenCollections": [{"key":"tops","label":"TOPS"},{"key":"bottoms","label":"BOTTOMS"},{"key":"accessories","label":"ACCESSORIES"},{"key":"sales","label":"SALES"},{"key":"looks","label":"LOOKBOOK"}],
   "customizeCollections": [{"key":"bags","label":"BAGS"}],
-  "womenFeatured": {"tops":["w-burgundy-zip-hoodie","w-skyblue-hoodie","w-tiramisu-hoodie-black","w-tiramisu-hoodie-white","w-tiramisu-hoodie-burgundy","w-sporty-top-ivory","w-sporty-top","w-burgundy-baby-top","w-white-baby-top","w-burgundy-burberry-windbreaker","w-blue-zip-hoodie","w-hot-pink-zip-hoodie","w-red-zip-hoodie","w-pink-zip-hoodie","w-delulu-blazer-2","w-muse-blazer","w-hg-delulu-blazer","w-burgundy-long-sleeve","w-fuchsia-baby-top","w-blue-baby-top","w-red-baby-top","w-white-baby-top-1","w-pink-baby-top","w-no-bra-tank-top","w-black-windbreaker"],"bottoms":["w-mini-bag-jeans-blackwash-black","w-mini-bag-jeans-burgundy","w-lace-jean","w-transparent-jean","w-black-wind-pants","w-burgundy-wind-pants","w-grey-pants","w-pink-pants","w-logo-flare-jeans","w-logo-flare-leggings","w-walking-art-black-jeans","w-logo-leggings","w-mini-bag-jeans-blackwash-burgundy","w-mini-bag-jeans-black","w-red-pants","w-black-pants"],"jackets":["w-white-logo-windbreaker","w-black-logo-windbreaker"],"accessories":["w-white-shoulder-bag","w-burgundy-shoulder-bag"]},
+  "womenFeatured": {"tops":["w-burgundy-zip-hoodie","w-skyblue-hoodie","w-tiramisu-hoodie-black","w-tiramisu-hoodie-white","w-tiramisu-hoodie-burgundy","w-tiramisu-hoodie-grey","w-tiramisu-hoodie-pink","w-sporty-top-ivory","w-sporty-top","w-burgundy-baby-top","w-white-baby-top","w-burgundy-burberry-windbreaker","w-blue-zip-hoodie","w-hot-pink-zip-hoodie","w-red-zip-hoodie","w-pink-zip-hoodie","w-delulu-blazer-2","w-muse-blazer","w-hg-delulu-blazer","w-burgundy-long-sleeve","w-fuchsia-baby-top","w-blue-baby-top","w-red-baby-top","w-white-baby-top-1","w-pink-baby-top","w-no-bra-tank-top","w-black-windbreaker"],"bottoms":["w-mini-bag-jeans-blackwash-black","w-mini-bag-jeans-burgundy","w-lace-jean","w-transparent-jean","w-black-wind-pants","w-burgundy-wind-pants","w-grey-pants","w-pink-pants","w-logo-flare-jeans","w-logo-flare-leggings","w-walking-art-black-jeans","w-logo-leggings","w-mini-bag-jeans-blackwash-burgundy","w-mini-bag-jeans-black","w-red-pants","w-black-pants"],"jackets":["w-white-logo-windbreaker","w-black-logo-windbreaker"],"accessories":["w-white-shoulder-bag","w-burgundy-shoulder-bag"]},
   "tryOnGarments": {"black-baby-top":{"type":"womens_baby_top","label":"women's black baby top: short, fitted, short-sleeve black cotton top with a fine rib, round neck; the hem sits slightly above the belly button","category":"tops","colour":"black","views":{"front":"assets/try-on/black-baby-top/garment.png"},"fitReference":"assets/try-on/black-baby-top/fit-reference.jpg","print":{"placement":"centred on the chest, a little below the neckline","width":0.3}}},
   "products": {
 
@@ -1964,6 +1964,36 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "colours": [{"id":"burgundy","name":"Burgundy","hex":"#6B2535"}],
       "chart": ["XS-S","M-L"],
       "gallery": [{"src":"assets/img/gallery/w-tiramisu-hoodie-burgundy-1-0b0b5073.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-tiramisu-hoodie-burgundy-2-1648342f.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-tiramisu-hoodie-burgundy-3-ffac3c20.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-burgundy-4-04d52836.webp","w":1024,"h":1536}]
+    },
+    "w-tiramisu-hoodie-grey": {
+      "gender": "women",
+      "id": "bymarccc:w-tiramisu-hoodie-grey",
+      "title": "OVERSIZED HOODIE",
+      "price": 450,
+      "currency": "RON",
+      "cut": "Womenswear",
+      "collections": ["tops"],
+      "details": ["Oversized hoodie with dropped shoulders and a ribbed hem and cuffs","\"Hot girls...\" on the chest and \"Hot girls eat Tiramisu\" on the back","Grey","All clothing is custom made.","100% Organic Cotton"],
+      "description": "An oversized grey hoodie from the bymarccc womenswear collection: \"Hot girls...\" on the chest, \"Hot girls eat Tiramisu\" on the back.",
+      "unavailable": [],
+      "colours": [{"id":"grey","name":"Grey","hex":"#b9b9b9"}],
+      "chart": ["XS-S","M-L"],
+      "gallery": [{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-1-e525c458.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-2-50b864a4.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-3-18821d0b.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-tiramisu-hoodie-grey-4-34c9f1f7.webp","w":1024,"h":1524}]
+    },
+    "w-tiramisu-hoodie-pink": {
+      "gender": "women",
+      "id": "bymarccc:w-tiramisu-hoodie-pink",
+      "title": "OVERSIZED HOODIE",
+      "price": 450,
+      "currency": "RON",
+      "cut": "Womenswear",
+      "collections": ["tops"],
+      "details": ["Oversized hoodie with dropped shoulders and a ribbed hem and cuffs","\"Hot girls...\" on the chest and \"Hot girls eat Tiramisu\" on the back","Pink","All clothing is custom made.","100% Organic Cotton"],
+      "description": "An oversized pink hoodie from the bymarccc womenswear collection: \"Hot girls...\" on the chest, \"Hot girls eat Tiramisu\" on the back.",
+      "unavailable": [],
+      "colours": [{"id":"pink","name":"Pink","hex":"#f2c4cf"}],
+      "chart": ["XS-S","M-L"],
+      "gallery": [{"src":"assets/img/gallery/w-tiramisu-hoodie-pink-1-b6b17ace.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-pink-2-9187a09c.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-tiramisu-hoodie-pink-3-a1355d1a.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-tiramisu-hoodie-pink-4-cbe8a97b.webp","w":1024,"h":1524}]
     },
     "w-white-tee": {
       "designs": ["Blank","Logo","Lady on the street","Hot Girls","Muse","Delulu","PARIS","Barbie","Happy Hoes","Boys Lie","Art"],
