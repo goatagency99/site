@@ -1674,8 +1674,8 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "gallery": [{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/B359AF59-8D1C-483E-9213-7D96ACD9C9D5.jpg?v=1760810273&width=1400","w":2535,"h":3601},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/7067F61D-A4F3-4E3F-8ED3-3AA67381D33E.jpg?v=1760810275&width=1400","w":2535,"h":3601},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/9CFC9537-4F72-4595-93C1-6AA7226EB931.jpg?v=1760810274&width=1400","w":2535,"h":3601}]
     },
     "w-black-hoodie": {
-      "designs": ["Muse","PARIS","Happy Hoes","Boys Lie","Delulu","Logo","Hot Girls","Yacht","Art"],
-      "designImages": {"logo":0,"boys-lie":1,"paris":2,"muse":3,"happy-hoes":4,"delulu":5,"yacht":6},
+      "designs": ["Muse","PARIS","Happy Hoes","Boys Lie","Delulu","Logo","Hot Girls","Yacht","Art","Tiramisu"],
+      "designImages": {"logo":0,"boys-lie":1,"paris":2,"muse":3,"happy-hoes":4,"delulu":5,"yacht":6,"tiramisu":7},
       "gender": "women",
       "model": {"height":177,"weight":53,"size":"XS-S","modelMedia":[0],"text":"Model is 177 cm and 53 kg and wears size XS-S"},
       "id": "shopify:black-hoodie",
@@ -1684,12 +1684,12 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "currency": "RON",
       "cut": "Womenswear",
       "collections": ["tops"],
-      "details": ["Oversized hoodie with dropped shoulders and a ribbed hem and cuffs","Several embroidery/printed designs available (Muse, NOT FROM PARIS, Happy Hoes, Boys Lie, Delulu, Logo, Hot Girls, Yacht, Art)","Black","All clothing is custom made.","100% Organic Cotton"],
+      "details": ["Oversized hoodie with dropped shoulders and a ribbed hem and cuffs","Several embroidery/printed designs available (Muse, NOT FROM PARIS, Happy Hoes, Boys Lie, Delulu, Logo, Hot Girls, Yacht, Art, Tiramisu)","Black","All clothing is custom made.","100% Organic Cotton"],
       "description": "An oversized black hoodie from the bymarccc womenswear collection, available in several embroidery/printed designs.",
       "unavailable": [],
       "colours": [{"id":"black","name":"Black","hex":"#111111"}],
       "chart": ["XS-S","M-L"],
-      "gallery": [{"src":"assets/img/gallery/w-black-hoodie-logo-666227e4.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-black-hoodie-1-79ed5264.webp","w":900,"h":1279},{"src":"assets/img/gallery/w-black-hoodie-4-803e0893.webp","w":900,"h":1304},{"src":"assets/img/gallery/w-black-hoodie-6-4940133f.webp","w":900,"h":1304},{"src":"assets/img/gallery/w-black-hoodie-happy-hoes-402414ea.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-black-hoodie-delulu-c1c8796d.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-black-hoodie-yacht-a74e4f9e.webp","w":1414,"h":2049}]
+      "gallery": [{"src":"assets/img/gallery/w-black-hoodie-logo-666227e4.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-black-hoodie-1-79ed5264.webp","w":900,"h":1279},{"src":"assets/img/gallery/w-black-hoodie-4-803e0893.webp","w":900,"h":1304},{"src":"assets/img/gallery/w-black-hoodie-6-4940133f.webp","w":900,"h":1304},{"src":"assets/img/gallery/w-black-hoodie-happy-hoes-402414ea.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-black-hoodie-delulu-c1c8796d.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-black-hoodie-yacht-a74e4f9e.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-tiramisu-hoodie-black-1-a2696001.webp","w":1024,"h":1534}]
     },
     "w-black-long-sleeve": {
       "designs": ["Delulu","Boys Lie","Muse","PARIS","Hot Girls","Happy Hoes","Art"],
@@ -1888,8 +1888,8 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "gallery": [{"src":"assets/img/gallery/w-white-baby-top-1-1-39987655.webp","w":900,"h":1303},{"src":"assets/img/gallery/w-white-baby-top-1-2-9fbfc62f.webp","w":900,"h":1303},{"src":"assets/img/gallery/w-white-baby-top-1-3-e0e03044.webp","w":900,"h":1303},{"src":"assets/img/gallery/w-white-baby-top-1-4-888d7589.webp","w":900,"h":1303},{"src":"assets/img/gallery/w-white-baby-top-1-5-884accf8.webp","w":900,"h":1303},{"src":"assets/img/gallery/w-white-baby-top-1-6-978ba1b6.webp","w":900,"h":1303},{"src":"assets/img/gallery/w-white-baby-top-1-7-1316c0e3.webp","w":900,"h":1353},{"src":"assets/img/gallery/w-white-baby-top-1-8-77062b8b.webp","w":900,"h":1353},{"src":"assets/img/gallery/w-white-baby-top-1-9-66084668.webp","w":900,"h":1349}]
     },
     "w-white-hoodie": {
-      "designs": ["Muse","PARIS","Happy Hoes","Boys Lie","Delulu","Logo","Hot Girls","Yacht","Art"],
-      "designImages": {"logo":0,"hot-girls":1,"happy-hoes":2,"boys-lie":3,"paris":4,"muse":5,"delulu":6,"yacht":7},
+      "designs": ["Muse","PARIS","Happy Hoes","Boys Lie","Delulu","Logo","Hot Girls","Yacht","Art","Tiramisu"],
+      "designImages": {"logo":0,"hot-girls":1,"happy-hoes":2,"boys-lie":3,"paris":4,"muse":5,"delulu":6,"yacht":7,"tiramisu":8},
       "gender": "women",
       "model": {"height":177,"weight":53,"size":"XS-S","modelMedia":[0],"text":"Model is 177 cm and 53 kg and wears size XS-S"},
       "id": "shopify:white-hoodie",
@@ -1898,12 +1898,12 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "currency": "RON",
       "cut": "Womenswear",
       "collections": ["tops"],
-      "details": ["Oversized hoodie with dropped shoulders and a ribbed hem and cuffs","Several embroidery/printed designs available (Muse, NOT FROM PARIS, Happy Hoes, Boys Lie, Delulu, Logo, Hot Girls, Yacht, Art)","White","All clothing is custom made.","100% Organic Cotton"],
+      "details": ["Oversized hoodie with dropped shoulders and a ribbed hem and cuffs","Several embroidery/printed designs available (Muse, NOT FROM PARIS, Happy Hoes, Boys Lie, Delulu, Logo, Hot Girls, Yacht, Art, Tiramisu)","White","All clothing is custom made.","100% Organic Cotton"],
       "description": "An oversized white hoodie from the bymarccc womenswear collection, available in several embroidery/printed designs.",
       "unavailable": [],
       "colours": [{"id":"white","name":"White","hex":"#f2f2f2"}],
       "chart": ["XS-S","M-L"],
-      "gallery": [{"src":"assets/img/gallery/w-white-hoodie-logo-0887f864.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-2-6c38f1e9.webp","w":900,"h":1304},{"src":"assets/img/gallery/w-white-hoodie-happy-hoes-81d18cb2.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-boys-lie-50e5d0ec.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-paris-a5d47232.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-muse-fe18d1b2.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-delulu-7fe157a1.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-yacht-759ef903.webp","w":1414,"h":2049}]
+      "gallery": [{"src":"assets/img/gallery/w-white-hoodie-logo-0887f864.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-2-6c38f1e9.webp","w":900,"h":1304},{"src":"assets/img/gallery/w-white-hoodie-happy-hoes-81d18cb2.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-boys-lie-50e5d0ec.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-paris-a5d47232.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-muse-fe18d1b2.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-delulu-7fe157a1.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-white-hoodie-yacht-759ef903.webp","w":1414,"h":2049},{"src":"assets/img/gallery/w-tiramisu-hoodie-white-1-2143f956.webp","w":1024,"h":1534}]
     },
     "w-skyblue-hoodie": {
       "gender": "women",
@@ -1918,7 +1918,7 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "unavailable": [],
       "colours": [{"id":"skyblue","name":"Sky Blue","hex":"#dceaf0"}],
       "chart": ["XS-S","M-L"],
-      "gallery": [{"src":"assets/img/gallery/w-skyblue-hoodie-1-bc29a54a.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-skyblue-hoodie-2-397b63a2.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-skyblue-hoodie-3-9d6a3a0b.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-skyblue-hoodie-4-8a97f57b.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-skyblue-hoodie-5-45912e09.webp","w":1024,"h":1536}]
+      "gallery": [{"src":"assets/img/gallery/w-skyblue-hoodie-4-8a97f57b.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-skyblue-hoodie-3-9d6a3a0b.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-skyblue-hoodie-5-45912e09.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-skyblue-hoodie-1-bc29a54a.webp","w":1024,"h":1524},{"src":"assets/img/gallery/w-skyblue-hoodie-2-397b63a2.webp","w":1024,"h":1524}]
     },
     "w-tiramisu-hoodie-black": {
       "gender": "women",
