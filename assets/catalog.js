@@ -2413,7 +2413,7 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "unavailable": [],
       "colours": [{"id":"black","name":"Black","hex":"#111111"}],
       "chart": ["S","M","L"],
-      "gallery": [{"src":"assets/img/gallery/w-logo-leggings-new-6-bac5d147.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-logo-leggings-new-1-4748665d.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-logo-leggings-new-2-07ffbf3f.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-logo-leggings-new-3-0f0621af.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-logo-leggings-new-4-5e4a6bd8.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-logo-leggings-new-5-2530f86c.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-logo-leggings-5-ba9f1254.webp","w":1025,"h":1535},{"src":"assets/img/gallery/w-logo-leggings-6-65722cb7.webp","w":1025,"h":1535}]
+      "gallery": [{"src":"assets/img/gallery/w-logo-leggings-side-9f830748.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-logo-leggings-new-6-bac5d147.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-logo-leggings-new-1-4748665d.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-logo-leggings-new-2-07ffbf3f.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-logo-leggings-new-3-0f0621af.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-logo-leggings-new-4-5e4a6bd8.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-logo-leggings-new-5-2530f86c.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-logo-leggings-5-ba9f1254.webp","w":1025,"h":1535},{"src":"assets/img/gallery/w-logo-leggings-6-65722cb7.webp","w":1025,"h":1535}]
     },
     "w-white-shoulder-bag": {
       "gender": "women",
