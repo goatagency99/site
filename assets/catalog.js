@@ -2066,7 +2066,7 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "unavailable": [],
       "colours": [{"id":"black","name":"Black","hex":"#111111"}],
       "chart": ["34","36","38","40"],
-      "gallery": [{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/1433EF88-8840-49F3-BF6F-4DBE5B5C7976.jpg?v=1769272869&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/imgi_88_IMG_7620.jpg?v=1&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/imgi_21_IMG_7627.jpg?v=1&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/imgi_20_IMG_7622.jpg?v=1&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/imgi_18_IMG_7621.jpg?v=1&width=1400","w":1200,"h":1600}],
+      "gallery": [{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/1433EF88-8840-49F3-BF6F-4DBE5B5C7976.jpg?v=1769272869&width=1400","w":1200,"h":1600},{"src":"assets/img/gallery/w-walking-art-black-1-380cef79.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-walking-art-black-2-3cf6e2ef.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-walking-art-black-3-b77699ed.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-walking-art-black-4-5397c3f2.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-walking-art-black-5-53d8f445.webp","w":1024,"h":1534}],
       "needsBody": true
     },
     "w-walking-art-blue-jeans": {
@@ -2082,7 +2082,7 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "unavailable": [],
       "colours": [{"id":"blue","name":"Blue","hex":"#3b6fb6"}],
       "chart": ["34","36","38","40"],
-      "gallery": [{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/2DF973A7-047A-4C53-8F96-EC4764ADA534.jpg?v=1769272869&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/imgi_17_IMG_7631.jpg?v=1769272744&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/imgi_20_IMG_7629.jpg?v=1769272744&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/imgi_19_IMG_7632.jpg?v=1769272744&width=1400","w":1200,"h":1600}],
+      "gallery": [{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/2DF973A7-047A-4C53-8F96-EC4764ADA534.jpg?v=1769272869&width=1400","w":1200,"h":1600},{"src":"assets/img/gallery/w-walking-art-blue-1-88c048e1.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-walking-art-blue-2-54c0c482.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-walking-art-blue-3-9ca68121.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-walking-art-blue-4-aba42ddc.webp","w":1024,"h":1534}],
       "needsBody": true
     },
     "w-not-from-paris-jeans": {
