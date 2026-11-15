@@ -2160,7 +2160,7 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "unavailable": [],
       "colours": [{"id":"ivory","name":"Ivory","hex":"#efe6d3"}],
       "chart": ["XS-S","M-L"],
-      "gallery": [{"src":"assets/img/gallery/w-satin-shirt-main-401779a0.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-satin-shirt-2-12172614.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-satin-shirt-3-51765c49.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-satin-shirt-4-ce9192d2.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-satin-shirt-5-af82fd7c.webp","w":1024,"h":1534}]
+      "gallery": [{"src":"assets/img/gallery/w-satin-shirt-main-401779a0.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-satin-shirt-v3-back-28bf9fbd.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-satin-shirt-v3-front-a1a66d78.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-satin-shirt-4-ce9192d2.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-satin-shirt-v3-fullback-87d01313.webp","w":1024,"h":1534}]
     },
     "w-sequin-mini-skirt": {
       "gender": "women",
