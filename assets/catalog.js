@@ -1874,6 +1874,8 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "gallery": [{"src":"assets/img/gallery/w-white-baby-top-1-a14c10ea.webp","w":900,"h":1303},{"src":"assets/img/gallery/w-white-baby-top-2-c95687f1.webp","w":900,"h":1303},{"src":"assets/img/gallery/w-white-baby-top-3-53731ac5.webp","w":900,"h":1303},{"src":"assets/img/gallery/w-white-baby-top-4-70a361da.webp","w":900,"h":1303},{"src":"assets/img/gallery/w-white-baby-top-5-c5a771d1.webp","w":900,"h":1303},{"src":"assets/img/gallery/w-white-baby-top-6-72da4b78.webp","w":900,"h":1303},{"src":"assets/img/gallery/w-white-baby-top-7-158ed4c3.webp","w":900,"h":1353},{"src":"assets/img/gallery/w-white-baby-top-8-26619020.webp","w":900,"h":1353},{"src":"assets/img/gallery/w-white-baby-top-9-790bce26.webp","w":900,"h":1349}]
     },
     "w-white-baby-top-1": {
+      "designs": ["Muse","Cat","Happy Hoes","Boys Lie","Delulu","Logo","Hot Girls","Yacht","Art"],
+      "designImages": {"hot-girls":0,"cat":1,"muse":2,"delulu":3,"boys-lie":4,"happy-hoes":5,"art":6,"logo":7,"yacht":8},
       "gender": "women",
       "model": {"height":177,"weight":53,"size":"XS-S","modelMedia":[0],"text":"Model is 177 cm and 53 kg and wears size XS-S"},
       "id": "shopify:white-baby-top-1",
