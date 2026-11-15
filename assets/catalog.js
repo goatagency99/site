@@ -2112,7 +2112,7 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "unavailable": [],
       "colours": [{"id":"default","name":"As shown","hex":"#dcdcd8"}],
       "chart": ["34","36","38","40","42"],
-      "gallery": [{"src":"assets/img/gallery/w-art-jean-front-a411b6ad.webp","w":1024,"h":1534},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/IMG_3584.jpg?v=1759095294&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/IMG_3585.jpg?v=1&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/IMG_3586.jpg?v=1&width=1400","w":1200,"h":1600}],
+      "gallery": [{"src":"assets/img/gallery/w-art-jean-front-a411b6ad.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-art-jean-photo-2-db3741a1.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-art-jean-photo-3-77e59626.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-art-jean-photo-4-02c400e0.webp","w":1024,"h":1534},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/IMG_3584.jpg?v=1759095294&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/IMG_3585.jpg?v=1&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/IMG_3586.jpg?v=1&width=1400","w":1200,"h":1600}],
       "needsBody": true
     },
     "w-crochet-jeans": {
