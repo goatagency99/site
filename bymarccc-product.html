@@ -579,7 +579,7 @@ html.bym-memlock #pPrice, html.bym-memlock #barPrice { display: none !important;
 }
 .pdp-sizemsg { width: 100%; margin: 2px 0 0; text-align: center; font-size: 12px; color: #c8102e; min-height: 0; }
 .pdp-modelnote { display: none; }
-@media (max-width: 899px) { .bym-modelbelow .pdp-modelnote:not([hidden]) { display: block; margin: 0 0 10px; text-align: center; font-size: 13px; line-height: 1.3; color: #333; } .bym-modelbelow #modelText { display: none; } }
+@media (max-width: 899px) { .bym-modelbelow .pdp-modelnote:not([hidden]) { display: block; margin: 0 0 -4px; text-align: center; font-size: 13px; line-height: 1.3; color: #333; } .bym-modelbelow #modelText { display: none; } }
 .pdp-sizemsg:empty { display: none; }
 @media (min-width: 900px) { .pdp-family { margin: 0 0 14px; } }
 
@@ -678,10 +678,10 @@ html.bym-memlock #pPrice, html.bym-memlock #barPrice { display: none !important;
 @media (max-width: 899px) {
   /* photo a bit shorter than the screen so the colours / options under it are always in view (room to swipe them);
      the photo keeps its own ratio (contain) and the side space takes the photo's own background colour — no white frame */
-  .pdp-gallery { aspect-ratio: auto; height: min(150vw, calc(100svh - 205px)); background: var(--gbg, #f0f0f0); }
-  .pdp-gallery.has-family { height: min(150vw, calc(100svh - 255px)); }
+  .pdp-gallery { aspect-ratio: auto; height: min(170vw, calc(100svh - 160px)); background: var(--gbg, #f0f0f0); }   /* taller photo (was 100svh - 205px): the options under it sit lower */
+  .pdp-gallery.has-family { height: min(170vw, calc(100svh - 211px)); }
   .pdp-gallery__slide { background: var(--sbg, var(--gbg, #f0f0f0)); display: block; height: 100%; }
-  .pdp-gallery .pdp-gallery__slide img { width: 100%; height: 100%; max-height: 100%; object-fit: contain; }
+  .pdp-gallery .pdp-gallery__slide img { width: 100%; height: 100%; max-height: 100%; object-fit: cover; object-position: 50% 28%; }   /* fills the frame: the empty background at the left/right is cropped away */
   .pdp-gallery .pdp-gallery__slide.is-cover img { object-fit: cover; }
   .pdp-info { display: flex; flex-direction: column; }
   .pdp-info > .pdp-label { display: none; }
