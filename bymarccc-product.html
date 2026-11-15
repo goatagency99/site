@@ -579,6 +579,12 @@ html.bym-memlock #pPrice, html.bym-memlock #barPrice { display: none !important;
 }
 .pdp-sizemsg { width: 100%; margin: 2px 0 0; text-align: center; font-size: 12px; color: #c8102e; min-height: 0; }
 .pdp-modelnote { display: none; }
+@media (max-width: 899px) {
+  .pdp-hwbelow { margin: 8px 16px 6px; text-align: center; }
+  .pdp-hwbelow #hwToggle { display: block; width: 100%; max-width: 360px; margin: 0 auto; min-height: 36px; padding: 0 12px; border: 1px solid #111; border-radius: 9px; background: #fff; color: #111; font-size: 13px; letter-spacing: .02em; text-align: center; cursor: pointer; pointer-events: auto; }
+  .pdp-hwbelow #hwToggle[hidden] { display: none; }
+  .pdp-hwbelow .pdp-hw { max-width: 360px; margin: 0 auto; border: 1px solid #111; border-radius: 9px; background: #fff; }
+}
 @media (max-width: 899px) { .bym-modelbelow .pdp-modelnote:not([hidden]) { display: block; margin: 0 0 -4px; text-align: center; font-size: 13px; line-height: 1.3; color: #333; } .bym-modelbelow #modelText { display: none; } }
 .pdp-sizemsg:empty { display: none; }
 @media (min-width: 900px) { .pdp-family { margin: 0 0 14px; } }
@@ -1600,6 +1606,12 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
   const hwForm = $('hwForm'), hwH = $('hwH'), hwW = $('hwW'), hwToggle = $('hwToggle');
   const HW = { height: [120, 230], weight: [30, 250] };
   hwToggle.hidden = !PRODUCT.needsBody;
+  /* phone, women's products that need height & weight: the "Fill in your height and weight" bar sits under the photo (above the sizes), not on it */
+  if (PRODUCT.needsBody && PRODUCT.gender === 'women' && matchMedia('(max-width: 899px)').matches) {
+    const box = document.createElement('div'); box.className = 'pdp-hwbelow'; box.id = 'hwBelow';
+    const mn = $('modelNote'); (mn && mn.parentNode ? mn.parentNode : $('sizes').parentNode).insertBefore(box, mn ? mn.nextSibling : $('sizes'));
+    box.append(hwToggle, hwForm);
+  }
   const hwVal = (inp, [lo, hi]) => { const v = Number(inp.value); return inp.value.trim() !== '' && Number.isFinite(v) && v >= lo && v <= hi ? Math.round(v) : null; };
   const hwMark = (inp, ok, msgText) => { hwForm.classList.toggle('has-err', !ok || hwForm.querySelector('.is-invalid:not(#' + inp.id + ')') !== null); inp.classList.toggle('is-invalid', !ok); inp.setAttribute('aria-invalid', String(!ok)); const e = $(inp.id + 'Err'); e.hidden = ok; if (!ok) e.textContent = msgText; };
   function hwCheck(show) {
