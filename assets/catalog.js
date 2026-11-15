@@ -2539,7 +2539,7 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "unavailable": [],
       "colours": [{"id":"ivory","name":"Ivory","hex":"#efe9dc"}],
       "chart": ["XS-S","M-L"],
-      "gallery": [{"src":"assets/img/gallery/w-sporty-ivory-new-1-7898d2a5.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sporty-top-ivory-11-a77dd443.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sporty-ivory-new-2-8a0fe453.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sporty-ivory-new-3-00afc13e.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sporty-ivory-new-4-501c14e2.webp","w":1024,"h":1534}]
+      "gallery": [{"src":"assets/img/gallery/w-sporty-ivory-new-1-7898d2a5.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sporty-top-ivory-12-ae91d27a.webp","w":1024,"h":1536},{"src":"assets/img/gallery/w-sporty-ivory-new-2-8a0fe453.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sporty-ivory-new-3-00afc13e.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-sporty-ivory-new-4-501c14e2.webp","w":1024,"h":1534}]
     },
     "w-logo-flare-jeans": {
       "gender": "women",
