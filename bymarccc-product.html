@@ -1606,8 +1606,8 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
   const hwForm = $('hwForm'), hwH = $('hwH'), hwW = $('hwW'), hwToggle = $('hwToggle');
   const HW = { height: [120, 230], weight: [30, 250] };
   hwToggle.hidden = !PRODUCT.needsBody;
-  /* phone, women's products that need height & weight: the "Fill in your height and weight" bar sits under the photo (above the sizes), not on it */
-  if (PRODUCT.needsBody && PRODUCT.gender === 'women' && matchMedia('(max-width: 899px)').matches) {
+  /* phone, every product that needs height & weight (women + men): the "Fill in your height and weight" bar sits under the photo (above the sizes), not on it */
+  if (PRODUCT.needsBody && matchMedia('(max-width: 899px)').matches) {
     const box = document.createElement('div'); box.className = 'pdp-hwbelow'; box.id = 'hwBelow';
     const mn = $('modelNote'); (mn && mn.parentNode ? mn.parentNode : $('sizes').parentNode).insertBefore(box, mn ? mn.nextSibling : $('sizes'));
     box.append(hwToggle, hwForm);
