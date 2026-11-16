@@ -106,7 +106,8 @@
     try { out.g.currentTime = audio.currentTime + 0.12; } catch (e) {}
     const L = m => { try { window.__bymMixLog && window.__bymMixLog('go ' + m); } catch (e) {} };   // diagnostics only (?mixdebug=1)
     L('start real=' + audio.currentTime.toFixed(2) + ' deck=' + out.g.currentTime.toFixed(2) + ' buf=' + (out.g.buffered.length ? out.g.buffered.end(out.g.buffered.length - 1).toFixed(1) : '-'));
-    /* iPhone fires 'playing' BEFORE the seek has finished and delivers the first audio later (LTE): wait until deck A is really playing
+    /* switch-over sync: deck A must not be BEHIND the real player when it takes over (that replays a bit = the double sound at the start of the blend);
+       it is put ~0.08 s ahead instead (inaudible). iPhone fires 'playing' BEFORE the seek has finished and delivers the first audio later (LTE): wait until deck A is really playing
        (position moving, not seeking), jump it to the real player's position if it fell behind (inside buffered data = instant), only then judge it */
     let startT = 0; try { startT = out.g.currentTime; } catch (e) {}
     const deckWait = cb => {
@@ -117,7 +118,7 @@
         const el = performance.now() - w0;
         if (!out.g.seeking && out.g.readyState >= 3 && out.g.currentTime > startT + 0.15) {
           const lag = audio.currentTime - out.g.currentTime;
-          if (lag > 0.3 && fixes < 2 && el < 2500 && inBuf(audio.currentTime + 0.3)) { fixes++; L('deck behind by ' + lag.toFixed(2) + ' s → jump to real'); try { out.g.currentTime = audio.currentTime + 0.25; startT = out.g.currentTime; } catch (e) {} setTimeout(step, 80); return; }
+          if ((lag > 0.02 || lag < -0.2) && fixes < 4 && el < 2500 && inBuf(audio.currentTime + 0.3)) { fixes++; L('deck off by ' + lag.toFixed(2) + ' s → sync to real'); try { out.g.currentTime = audio.currentTime + 0.08; startT = out.g.currentTime; } catch (e) {} setTimeout(step, 80); return; }
           L('deck moving after ' + Math.round(el) + ' ms, lag=' + lag.toFixed(2));
           /* on iPhone the position moves BEFORE the sound reaches Web Audio: wait for the first non-zero samples; only a deck that stays digitally silent after 1.5 s of really playing is judged dead (by cb) */
           const tm = performance.now(), tm0 = out.g.currentTime;
@@ -151,7 +152,7 @@
         /* fades on the audio clock, so they also happen with the phone locked */
         const N = 64, fOut = new Float32Array(N), fIn = new Float32Array(N);
         for (let i = 0; i < N; i++) { const k = i / (N - 1); fOut[i] = Math.cos(k * Math.PI / 2); fIn[i] = Math.sin(k * Math.PI / 2); }
-        const c0 = mixCtx.currentTime + 0.02, w0 = performance.now(); let innDead = false, zeroSince = 0;
+        const c0 = mixCtx.currentTime + 0.02, w0 = performance.now(); let innDead = false, zeroSince = 0, syncN = 0, syncAt = 0;
         try { out.gn.gain.cancelScheduledValues(0); out.gn.gain.value = 1; out.gn.gain.setValueCurveAtTime(fOut, c0, rest);
               inn.gn.gain.cancelScheduledValues(0); inn.gn.gain.value = 0; inn.gn.gain.setValueCurveAtTime(fIn, c0, rest); } catch (e) { mixStop(); return; }
         const iv = setInterval(() => {
@@ -161,6 +162,12 @@
           const innMoved = inn.g.currentTime - inn0, zero = k > 0.12 && innMoved > 0.3 && !inn.g.paused && mixDead(inn);
           if (zero) { if (!zeroSince) zeroSince = performance.now(); } else zeroSince = 0;
           if (!innDead && (zero && performance.now() - zeroSince > 2000 || k > 0.35 && (inn.g.paused || inn.g.readyState < 2) || k > 0.5 && innMoved < 0.3)) { L('deck B DEAD moved=' + innMoved.toFixed(2) + ' zero=' + zero + ' paused=' + inn.g.paused + ' rs=' + inn.g.readyState + ' → real player unmuted'); innDead = true; mixQuiet(inn); audio.muted = false; }
+          /* end of the blend: the muted real player (next song) takes over from deck B → before that, line it up with deck B (slightly ahead),
+             otherwise the hand-over around second 10 of the new song replays a bit (the double sound) */
+          if (!innDead && k > 0.6 && k < 0.97 && syncN < 4 && audio.muted && !audio.paused && !audio.seeking && audio.readyState >= 3 && !inn.g.paused && performance.now() - syncAt > 500) {
+            const dd = audio.currentTime - inn.g.currentTime;
+            if (dd < 0.02 || dd > 0.2) { syncN++; syncAt = performance.now(); L('real off deck B by ' + dd.toFixed(2) + ' s → sync'); try { audio.currentTime = inn.g.currentTime + 0.08; } catch (e) {} }
+          }
           if (k >= 1 || out.g.ended || mixCtx.state !== 'running' || performance.now() - w0 > rest * 1000 + 4000) { clearInterval(iv); mixStop(); }
         }, 100);
       });
