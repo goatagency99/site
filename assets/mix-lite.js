@@ -44,6 +44,10 @@
     setInterval(assert, 15000);
     const set = (a, fn) => { try { navigator.mediaSession.setActionHandler(a, fn); } catch (e) {} };
     audio.addEventListener('play', () => { if (idle()) return; set('nexttrack', () => { const n = nextOf(cur()); if (n) play(n); }); });
+    /* lock-screen scrubber: real length + position, and dragging the bar seeks the song */
+    const pos = () => { try { const d = audio.duration; if (!idle() && d > 0 && isFinite(d) && navigator.mediaSession.setPositionState) navigator.mediaSession.setPositionState({ duration: d, playbackRate: audio.playbackRate || 1, position: Math.min(d, Math.max(0, audio.currentTime || 0)) }); } catch (e) {} };
+    ['loadedmetadata', 'durationchange', 'play', 'playing', 'pause', 'seeked', 'ratechange'].forEach(ev => audio.addEventListener(ev, pos));
+    audio.addEventListener('play', () => { if (idle()) return; set('seekto', d => { if (d && typeof d.seekTime === 'number' && isFinite(d.seekTime)) { audio.currentTime = Math.max(0, d.seekTime); pos(); } }); });
   }
 
   /* ---------- DJ mix (same engine as the homepage) ---------- */
@@ -151,7 +155,7 @@
         play(P.nxt); audio.muted = true;
         /* fades on the audio clock, so they also happen with the phone locked */
         const N = 64, fOut = new Float32Array(N), fIn = new Float32Array(N);
-        for (let i = 0; i < N; i++) { const k = i / (N - 1); fOut[i] = Math.cos(k * Math.PI / 2); fIn[i] = Math.sin(k * Math.PI / 2); }
+        for (let i = 0; i < N; i++) { const k = i / (N - 1); fOut[i] = Math.cos(k * Math.PI / 2); fIn[i] = k * k; }
         const c0 = mixCtx.currentTime + 0.02, w0 = performance.now(); let innDead = false, zeroSince = 0, syncN = 0, syncAt = 0;
         try { out.gn.gain.cancelScheduledValues(0); out.gn.gain.value = 1; out.gn.gain.setValueCurveAtTime(fOut, c0, rest);
               inn.gn.gain.cancelScheduledValues(0); inn.gn.gain.value = 0; inn.gn.gain.setValueCurveAtTime(fIn, c0, rest); } catch (e) { mixStop(); return; }

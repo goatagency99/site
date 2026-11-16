@@ -2332,9 +2332,9 @@
   const CLD = 'https://res.cloudinary.com/lpj7yftl/video/upload/';
   const M = '/assets/media/';   // self-hosted on Cloudflare (moved off Cloudinary 2026-10-01)
   const SEED = [
-    { id: 'when-the-partys-over', title: "Billie Eilish - when the party's over", channel: '', duration: '3:13',
-      src:   M + 'when-the-partys-over.a.mp4',
-      video: M + 'when-the-partys-over.mp4', poster: M + 'when-the-partys-over.jpg',
+    { id: 'when-the-partys-over', title: "Billie Eilish - when the party's over", channel: '', duration: '3:06',
+      src:   M + 'when-the-partys-over-v2.a.mp4',
+      video: M + 'when-the-partys-over-v2.mp4', poster: M + 'when-the-partys-over.jpg',
       thumb: 'assets/img/thumb-when-the-partys-over.jpg' },
     { id: 'everything-i-wanted', title: 'Billie Eilish - everything i wanted', channel: '', duration: '3:44',
       src:   M + 'everything-i-wanted.a.mp4',
@@ -3406,7 +3406,7 @@
       forcedNext = mixNextIdx; miniStep(1); audio.muted = true;   // real player → next song, muted until the blend ends
       /* the fades run on the audio clock (not requestAnimationFrame), so they also happen with the phone locked */
       const N = 64, fOut = new Float32Array(N), fIn = new Float32Array(N);
-      for (let i = 0; i < N; i++) { const k = i / (N - 1); fOut[i] = Math.cos(k * Math.PI / 2); fIn[i] = Math.sin(k * Math.PI / 2); }   // old song: loud → quiet, new song: quiet → loud
+      for (let i = 0; i < N; i++) { const k = i / (N - 1); fOut[i] = Math.cos(k * Math.PI / 2); fIn[i] = k * k; }   // old song: loud → quiet; new song starts from silence and rises slowly (k², no loud start)
       const c0 = mixCtx.currentTime + 0.02, w0 = performance.now(); let innDead = false, zeroSince = 0, syncN = 0, syncAt = 0;
       try { out.gn.gain.cancelScheduledValues(0); out.gn.gain.value = 1; out.gn.gain.setValueCurveAtTime(fOut, c0, rest);
             inn.gn.gain.cancelScheduledValues(0); inn.gn.gain.value = 0; inn.gn.gain.setValueCurveAtTime(fIn, c0, rest); } catch { mixStop(); return; }
@@ -5060,15 +5060,18 @@ html.is-vp-drag, html.is-vp-drag * { -webkit-user-select: none !important; user-
   audio.addEventListener('playing', assert);
   audio.addEventListener('pause', () => { navigator.mediaSession.playbackState = 'paused'; });
   audio.addEventListener('loadedmetadata', update);
-  document.addEventListener('visibilitychange', () => { if (document.hidden) assert(); });
-  setInterval(assert, 15000);
+  /* lock-screen scrubber: tell iOS the real length + position, so the bar can be dragged to any second (like the bar on the site) */
+  const pos = () => { try { const d = audio.duration; if (d > 0 && isFinite(d) && navigator.mediaSession.setPositionState) navigator.mediaSession.setPositionState({ duration: d, playbackRate: audio.playbackRate || 1, position: Math.min(d, Math.max(0, audio.currentTime || 0)) }); } catch {} };
+  ['loadedmetadata', 'durationchange', 'play', 'playing', 'pause', 'seeked', 'ratechange'].forEach(ev => audio.addEventListener(ev, pos));
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { assert(); pos(); } });
+  setInterval(() => { assert(); pos(); }, 15000);
   setInterval(() => { if (window.__bymMixBusy && window.__bymMixBusy()) assert(); }, 1500);   // last ~25 s (prepare + blend): iPhone drops the text whenever the decks start/stop → put it back right away
   const set = (a, fn) => { try { navigator.mediaSession.setActionHandler(a, fn); } catch {} };
   set('play', () => audio.play().catch(() => {}));
   set('pause', () => audio.pause());
   set('seekbackward', null);
   set('seekforward', null);
-  set('seekto', d => { if (typeof d.seekTime === 'number') audio.currentTime = d.seekTime; });
+  set('seekto', d => { if (typeof d.seekTime === 'number' && isFinite(d.seekTime)) { audio.currentTime = Math.max(0, d.seekTime); pos(); } });
   set('nexttrack', () => document.getElementById('miniNext')?.click());
   set('previoustrack', () => document.getElementById('miniPrev')?.click());
 })();
