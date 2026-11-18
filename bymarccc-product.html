@@ -684,8 +684,8 @@ html.bym-memlock #pPrice, html.bym-memlock #barPrice { display: none !important;
 @media (max-width: 899px) {
   /* photo a bit shorter than the screen so the colours / options under it are always in view (room to swipe them);
      the photo keeps its own ratio (contain) and the side space takes the photo's own background colour — no white frame */
-  .pdp-gallery { aspect-ratio: auto; height: min(170vw, calc(100svh - 160px)); background: var(--gbg, #f0f0f0); }   /* taller photo (was 100svh - 205px): the options under it sit lower */
-  .pdp-gallery.has-family { height: min(170vw, calc(100svh - 211px)); }
+  .pdp-gallery { aspect-ratio: auto; height: var(--pdp-gallery-height, min(170vw, calc(100svh - 160px))); background: var(--gbg, #f0f0f0); }   /* taller photo (was 100svh - 205px): the options under it sit lower */
+  .pdp-gallery.has-family { height: var(--pdp-gallery-height, min(170vw, calc(100svh - 211px))); }
   .pdp-gallery__slide { background: var(--sbg, var(--gbg, #f0f0f0)); display: block; height: 100%; }
   .pdp-gallery .pdp-gallery__slide img { width: 100%; height: 100%; max-height: 100%; object-fit: contain; }   /* whole photo visible (head to heels); the side space takes the photo's own grey background */
   .pdp-gallery .pdp-gallery__slide.is-cover img { object-fit: cover; }
@@ -1372,6 +1372,17 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
   }
   if (VERT) { gallery.classList.add('is-vert'); gallery.appendChild(bars); }
   if (IN_FAMILY) gallery.classList.add('has-family');
+  let galleryViewportWidth;
+  function lockMobileGalleryHeight() {
+    if (galleryViewportWidth === window.innerWidth) return;
+    galleryViewportWidth = window.innerWidth;
+    gallery.style.removeProperty('--pdp-gallery-height');
+    if (galleryViewportWidth > 899) return;
+    // Safari toolbars and the quick-view frame can change height during a swipe.
+    const height = gallery.getBoundingClientRect().height;
+    if (height > 0) gallery.style.setProperty('--pdp-gallery-height', `${height}px`);
+  }
+  lockMobileGalleryHeight();
   if (GALLERY.length < 2) { gallery.classList.add('is-single'); $('galPrev').hidden = true; $('galNext').hidden = true; }
   layout(0, false);
   /* Desktop (Pull&Bear-style): thumbnail strip beside the photo, and the size guide / details /
@@ -1478,7 +1489,11 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
     if (e.target.matches('input,select,textarea') || !$('ctlDrawer').hidden || !$('sizeModal').hidden) return;
     if (e.key === 'ArrowRight') goTo(gi + 1); if (e.key === 'ArrowLeft') goTo(gi - 1);
   });
-  window.addEventListener('resize', () => layout(0, false));
+  window.addEventListener('resize', () => {
+    if (window.innerWidth <= 899 && window.innerWidth === galleryViewportWidth) return;
+    lockMobileGalleryHeight();
+    layout(0, false);
+  });
 
   /* ==================================================================
      SWATCHES + SIZES
