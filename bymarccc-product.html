@@ -1379,10 +1379,13 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
     gallery.style.removeProperty('--pdp-gallery-height');
     if (galleryViewportWidth > 899) return;
     // Safari toolbars and the quick-view frame can change height during a swipe.
+    // A sane floor (150px) guards against locking in a near-empty box if this
+    // runs before layout has fully settled (e.g. mid quick-view-iframe resize)
+    // — without it, a bogus tiny height gets baked in and the photo never shows.
     const height = gallery.getBoundingClientRect().height;
-    if (height > 0) gallery.style.setProperty('--pdp-gallery-height', `${height}px`);
+    if (height > 150) gallery.style.setProperty('--pdp-gallery-height', `${height}px`);
   }
-  lockMobileGalleryHeight();
+  requestAnimationFrame(lockMobileGalleryHeight);   // measure after the browser has committed layout, not mid-script
   if (GALLERY.length < 2) { gallery.classList.add('is-single'); $('galPrev').hidden = true; $('galNext').hidden = true; }
   layout(0, false);
   /* Desktop (Pull&Bear-style): thumbnail strip beside the photo, and the size guide / details /
