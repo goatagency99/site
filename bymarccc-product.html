@@ -982,7 +982,7 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
   <style>
     .pdp-reco { margin: 44px 0 30px; }
     .pdp-reco__title { margin: 0 16px 12px; font-size: 13px; font-weight: 600; letter-spacing: .04em; color: #111; }
-    .pdp-reco__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+    .pdp-reco__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; touch-action: pan-x; }   /* horizontal only: a vertical finger movement here must scroll the PAGE, not wobble the carousel (iOS scroll-snap jank) */
     .pdp-reco__track::-webkit-scrollbar { display: none; }
     .pdp-reco__card { flex: 0 0 62vw; max-width: 340px; scroll-snap-align: start; color: #111; text-decoration: none; display: block; }
     @media (min-width: 900px) { .pdp-reco__card { flex-basis: 22vw; } .pdp-reco__title { margin-left: 32px; } }
@@ -4737,7 +4737,7 @@ body.pdp .bmp__now[hidden] ~ .bmp__sbtn { display: none; }   /* product pages: s
         words(p.title).forEach(w => { if (pw.has(w)) sc += 6; });
         if (String(p.gallery[0].src || p.gallery[0]).startsWith('assets/')) sc += 3;   // own photos first
         return [k, p, sc]; })
-      .filter(x => x[2] >= 20).sort((a, b) => b[2] - a[2]).slice(0, 10);
+      .filter(x => x[2] >= 20).sort((a, b) => b[2] - a[2]).slice(0, 20);
     if (P.customBag) ['w-white-shoulder-bag', 'w-burgundy-shoulder-bag'].forEach(k => { const p = C[k]; if (p && p.gallery && p.gallery.length && typeof p.price === 'number' && !p.soldOut && !scored.some(x => x[0] === k)) scored.push([k, p, 0]); });   // custom bag: women's bags as accessories at the end
     if (scored.length < 2) return;
     // full-body photo per product (head to shoes); a product's own "fullBody" index wins. Products missing here show their first photo.

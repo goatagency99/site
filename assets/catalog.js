@@ -2592,6 +2592,7 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "genders": ["men","women"],
       "saleStandalone": true,
       "saleOrder": 3,
+      "soldOut": true,
       "id": "bymarccc:van-gogh-jacket",
       "title": "Van Gogh Jacket",
       "price": 500,
