@@ -873,7 +873,7 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
     "id": "shopify:archive-painted-sweatpants-l",
     "title": "PAINTED SWEATPANTS",
     "price": 400,
-    "salePrice": 150,
+    "salePrice": 200,
     "currency": "RON",
     "gender": "women",
     "collections": [
