@@ -1396,7 +1396,7 @@
   }   /* a plain (non-sale) price in this rail card must read like an ordinary price, not a discount */
 </style>
 <script src="/assets/catalog.js?v=20261114rail"></script>
-<script src="/assets/women-sale-rail.js?v=16" defer></script>
+<script src="/assets/women-sale-rail.js?v=17" defer></script>
 <script>
 (() => {
   'use strict';
@@ -1712,9 +1712,11 @@
       if (active === 'looks') items.sort((a, b) => (a[1].lookNo || 99) - (b[1].lookNo || 99));   // LOOK 1 left, LOOK 2 right, …
       if (active === 'new') items = NEW_LIST.filter(k => CATALOG[k] && genderOf(CATALOG[k]).includes(gender)).map(k => [k, CATALOG[k]]);   // NEW COLLECTION tab: every piece with the NEW COLLECTION label
       if (active === 'jackets' && gender === 'women') items = (WOMEN_FEATURED.jackets || []).map(k => items.find(([x]) => x === k)).filter(Boolean);   // women JACKETS: only the Logo Windbreakers
-      if (active === 'sales' && gender === 'women') {
+      if (active === 'sales') {
         grid.classList.add('shop__grid--sales');
-        grid.appendChild(document.createElement('bym-women-sale-rail'));
+        const rail = document.createElement('bym-women-sale-rail');
+        rail.dataset.gender = gender;
+        grid.appendChild(rail);
         return;
       }
       if (!items.length) { grid.innerHTML = '<p class="shop__empty">COMING SOON</p>'; return; }
@@ -1750,27 +1752,6 @@
           grid.appendChild(b);
         }
         return;
-      }
-      if (active === 'sales' && gender !== 'women') {
-        const rail = items.filter(([, p]) => p.saleRail);   // a dedicated sale bar (men): only the sale-rail pieces, all one size
-        const standalone = items.filter(([, p]) => p.saleStandalone).sort((a, b) => (a[1].saleOrder ?? 99) - (b[1].saleOrder ?? 99));   // one-off pieces, 2 per row like the shop grid, size on the photo   // pinned product card(s) shown above the slider, normal shop-card styling
-        const duo = items.filter(([, p]) => p.saleDuo);   // a small shared swipeable row for a fixed group of items (e.g. Black Leather Jacket + Embroidered Cross Turtleneck)
-        if (rail.length || duo.length) {
-          const section = document.createElement('div'); section.className = 'sales__section sales__section--men'; grid.appendChild(section);
-          if (rail.length) mountSalesSlider(section, rail, { compact: true, rail: true }); // the size-40 pieces first: one sliding row of shop-sized cards + scroll bar
-          const rest = standalone.concat(duo);   // then every other sale piece, 2 per row; 6 shown, the rest behind LOAD MORE
-          if (rest.length) {
-            const sWrap = document.createElement('div'); sWrap.className = 'sales__standalone'; sWrap.style.marginTop = '28px'; section.appendChild(sWrap);
-            rest.slice(0, 6).forEach(([k, p]) => sWrap.appendChild(saleRailCard(k, p)));
-            if (rest.length > 6) {
-              const b = document.createElement('button'); b.type = 'button'; b.className = 'shop__loadmore'; b.textContent = 'LOAD MORE';
-              b.addEventListener('click', () => { b.remove(); rest.slice(6).forEach(([k, p]) => sWrap.appendChild(saleRailCard(k, p))); }, { once: true });
-              section.appendChild(b);
-            }
-          }
-          return;
-        }
-        mountSalesSlider(grid, items); return;
       }
       if (active === 'bottoms' && gender === 'women') {   // women BOTTOMS → DENIM · PANTS · LEGGINGS (tapping the chosen one again shows all)
         const DENIM_X = new Set(['w-butterfly-embroidery-1', 'w-art-dept-3']); const bsub = (k, p) => /legging/i.test(p.title || '') ? 'leggings' : /jean|denim/i.test(p.title || '') || DENIM_X.has(k) ? 'denim' : 'pants';
