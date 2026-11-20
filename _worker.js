@@ -175,8 +175,12 @@ async function checkoutCreate(request, origin) {
   }, 0);
   // store credit (RON) → this order's currency, never more than the items
   const creditMinor = actx && actx.creditRon > 0 ? Math.min(itemsTotalMinor, Math.round(geoPrice(actx.creditRon, rule) * 100)) : 0;
-  const totalMinor = itemsTotalMinor + shippingMinor - creditMinor;
+  // 3 pieces in the bag -> 50% off the single cheapest unit (never trust a client-sent discount either)
+  const promoMinor = promoThreeForCheapestMinor(items, pct, rule);
+  const discountMinor = creditMinor + promoMinor;
+  const totalMinor = itemsTotalMinor + shippingMinor - discountMinor;
   if (actx) { metaBase.acct_email = actx.email; metaBase.acct_pct = String(pct); metaBase.acct_why = actx.why || ""; metaBase.acct_voucher = actx.voucher ? String(actx.voucher) : ""; metaBase.acct_credit_minor = String(creditMinor); metaBase.acct_credit_ron = String(creditMinor ? Math.min(actx.creditRon, Math.round(creditMinor / 100 / (rule.fx || 1) * 100) / 100) : 0); }
+  if (promoMinor > 0) metaBase.promo_3rd_item_minor = String(promoMinor);
 
   // "Pay in 2 installments" — card only (the frontend only ever sends this for the card
   // payment method). Charges 50% now via a normal Checkout Session, saves the card for an
@@ -257,7 +261,7 @@ async function checkoutCreate(request, origin) {
         cancel_url: `${origin}/checkout.html?canceled=1`,
         customer_email: c.email || void 0,
         shipping_address_collection: void 0,
-        ...(creditMinor > 0 ? { discounts: [{ coupon: (await stripeRequest("coupons", { method: "POST", params: { amount_off: creditMinor, currency, duration: "once", name: "bymarccc credit", max_redemptions: 1 } })).id }] } : {}),
+        ...(discountMinor > 0 ? { discounts: [{ coupon: (await stripeRequest("coupons", { method: "POST", params: { amount_off: discountMinor, currency, duration: "once", name: creditMinor > 0 && promoMinor > 0 ? "bymarccc credit + 3rd item 50% off" : promoMinor > 0 ? "bymarccc 3rd item 50% off" : "bymarccc credit", max_redemptions: 1 } })).id }] } : {}),
         metadata: metaBase
       }
     });
@@ -1790,7 +1794,17 @@ async function orderSubmit(request) {
   OCUR = o.currency || "RON";
   if (pay === "cod" && acctInfo.creditAvail > 0) acctInfo.creditRon = Math.min(acctInfo.creditAvail, sub);
   const creditShown = pay === "card" ? (acctInfo.creditLocal || 0) : acctInfo.creditRon;
-  const totals = { sub, ship, total: totalOverride != null && pay === "card" && !b.installments ? totalOverride : Math.max(0, sub + ship - creditShown) };
+  // 3 pieces in the bag -> 50% off the single cheapest unit. The actual card charge already
+  // includes this (applied server-side in checkoutCreate's Stripe coupon, reflected in
+  // totalOverride); recompute it here only for the record/e-mail total of orders that don't
+  // use totalOverride (cash on delivery, and card paid in 2 installments).
+  const promoShown = (() => {
+    const totalQty = o.items.reduce((s, it) => s + (it.qty || 1), 0);
+    if (totalQty < 3) return 0;
+    const units = []; o.items.forEach((it) => { for (let i = 0; i < (it.qty || 1); i++) units.push(Number(it.price) || 0); });
+    return units.length ? Math.min(...units) / 2 : 0;
+  })();
+  const totals = { sub, ship, total: totalOverride != null && pay === "card" && !b.installments ? totalOverride : Math.max(0, sub + ship - creditShown - promoShown) };
   const chk = await goatifyItemCheck(b.items).catch(() => ({ extras: [], notes: "" }));
   const m = orderEmails(o, pay, totals, chk.extras.map((e) => e && e.image), CURRENT_ORIGIN || "https://bymarccc.com");
   const from = env("ORDER_EMAIL_FROM");
@@ -2613,6 +2627,20 @@ function acctApplyPct(localUnit, pct, cur) {
   return cur === "RON" ? Math.round(v * 100) / 100 : Math.round(v);
 }
 __name(acctApplyPct, "acctApplyPct");
+// 3 pieces in the bag -> 50% off the single cheapest unit (mirrors the client's promoThreeForCheapest in checkout.html)
+function promoThreeForCheapestMinor(items, pct, rule) {
+  const totalQty = items.reduce((s, it) => s + Math.max(1, Math.min(99, Math.round(Number(it.quantity || 1)))), 0);
+  if (totalQty < 3) return 0;
+  const units = [];
+  items.forEach((it) => {
+    const unit = Math.max(0, Math.round(acctApplyPct(geoPrice(it.price, rule), pct, rule.cur) * 100));
+    const qty = Math.max(1, Math.min(99, Math.round(Number(it.quantity || 1))));
+    for (let i = 0; i < qty; i++) units.push(unit);
+  });
+  if (!units.length) return 0;
+  return Math.round(Math.min(...units) / 2);
+}
+__name(promoThreeForCheapestMinor, "promoThreeForCheapestMinor");
 // record an accepted order on the customer's account (also: referral rewards, used vouchers/credits)
 async function acctRecordOrder(o, info) {
   const db = acctDb(); if (!db) return;

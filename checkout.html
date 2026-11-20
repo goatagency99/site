@@ -116,6 +116,13 @@
   .co-discount input:focus{ border-color:var(--ink); }
   .co-discount button{ border:0; border-radius:12px; padding:0 16px; font:600 11px/1 inherit; letter-spacing:.14em; text-transform:uppercase; background:#e6e6e2; color:#9a9a97; cursor:not-allowed; }
   .co-discount button.is-active{ background:var(--ink); color:#fff; cursor:pointer; }
+  .co-promo{ margin:0 0 18px; padding:14px 16px; border-radius:14px; background:#f6f3ec; border:1px solid #ece6d6; }
+  .co-promo[hidden]{ display:none; }
+  .co-promo__track{ height:5px; border-radius:999px; background:#e3dcc9; overflow:hidden; margin-bottom:9px; }
+  .co-promo__fill{ display:block; height:100%; border-radius:999px; background:#171717; transition:width .35s cubic-bezier(.22,1,.36,1); }
+  .co-promo.is-unlocked .co-promo__fill{ background:#1f8a4c; }
+  .co-promo p{ margin:0; font-size:12px; letter-spacing:.01em; line-height:1.5; }
+  .co-promo b{ font-weight:700; }
   .co-totals{ font-size:13.5px; }
   .co-totals div{ display:flex; justify-content:space-between; padding:7px 0; color:#4a4a48; }
   .co-totals div[hidden]{ display:none; }   /* Member −0% / Credit rows only when they apply */
@@ -313,6 +320,10 @@
       <span data-i18n="emptyBag">Your bag is empty.</span><br>
       <a href="index.html" data-i18n="continue">Continue shopping</a>
     </div>
+    <div class="co-promo" id="coPromo" hidden>
+      <div class="co-promo__track"><span class="co-promo__fill" id="coPromoFill"></span></div>
+      <p id="coPromoText"></p>
+    </div>
     <div class="co-discount">
       <input type="text" id="coDiscount" placeholder="Discount code" data-i18n-ph="phDiscount">
       <button type="button" id="coDiscountBtn" data-i18n="btnApply">Apply</button>
@@ -320,6 +331,7 @@
     <div class="co-totals">
       <div><span data-i18n="subtotal">Subtotal</span><span data-co-subtotal>0 RON</span></div>
       <div id="coDiscRow" hidden><span data-k>Member</span><span data-v>0</span></div>
+      <div id="coPromoRow" hidden><span data-k>3rd item −50%</span><span data-v>0</span></div>
       <div><span data-i18n="shipping">Shipping</span><span data-co-shipping>20 RON</span></div>
       <div class="total"><span data-i18n="total">Total</span><span data-co-total>0 RON</span></div>
     </div>
@@ -538,7 +550,16 @@
   var discSubtotal = function(){ return BAG.items.reduce(function(a, b){ return a + (typeof b.price === 'number' ? pctOf(lp(b.price)) * (b.quantity || 1) : 0); }, 0); };
   var shippingFor = function(){ return BAG.items.length && !ADD_TO && !(ACCT && ACCT.freeShip) ? (isRO() || !GEO ? SHIPPING_RON : GEO.rule(destCC()).ship) : 0; };
   var creditFor = function(){ return ACCT && ACCT.creditRon > 0 ? Math.min(discSubtotal(), lp(ACCT.creditRon)) : 0; };
-  var total = function(){ return Math.max(0, discSubtotal() + shippingFor() - creditFor()); };
+  /* 3 pieces in the bag -> 50% off the single cheapest unit (not per line: one unit, even if that line has quantity > 1) */
+  var promoThreeForCheapest = function(){
+    if (BAG.count() < 3) return 0;
+    var units = [];
+    BAG.items.forEach(function(b){ if (typeof b.price === 'number') { var p = pctOf(lp(b.price)); for (var i = 0; i < (b.quantity || 1); i++) units.push(p); } });
+    if (!units.length) return 0;
+    var min = Math.min.apply(null, units);
+    return curNow() === 'RON' ? Math.round(min / 2 * 100) / 100 : Math.round(min / 2);
+  };
+  var total = function(){ return Math.max(0, discSubtotal() + shippingFor() - creditFor() - promoThreeForCheapest()); };
   (function loadAccount(){
     fetch('/api/account?action=checkout', { credentials: 'same-origin' }).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
       if (!d || !d.ctx) { var h0 = document.querySelector('.co-summary .co-h'); if (h0 && !document.getElementById('coAcct')) { var s0 = document.createElement('a'); s0.id = 'coAcct'; s0.href = '/members.html'; s0.setAttribute('style', 'display:block;margin:4px 0 16px;padding:12px 14px;border-radius:12px;background:#f5f4f1;color:#111;font-size:13px;text-decoration:none'); s0.textContent = 'Sign in for FAM member prices, free shipping and rewards →'; h0.parentNode.insertBefore(s0, h0.nextSibling); } return; }
@@ -575,6 +596,14 @@
     var dr = document.getElementById('coDiscRow'), cr = document.getElementById('coCreditRow'), dAmt = BAG.subtotal() - discSubtotal(), cAmt = creditFor();
     if (dr) { dr.hidden = !(dAmt > 0); dr.querySelector('[data-k]').textContent = (ACCT && ACCT.why ? ACCT.why : 'Member') + ' −' + (ACCT ? ACCT.pct : 0) + '%'; dr.querySelector('[data-v]').textContent = '−' + fmt(dAmt); }
     if (cr) { cr.hidden = !(cAmt > 0); cr.querySelector('[data-v]').textContent = '−' + fmt(cAmt); }
+    var pr = document.getElementById('coPromoRow'), pAmt = promoThreeForCheapest();
+    if (pr) { pr.hidden = !(pAmt > 0); if (pAmt > 0) pr.querySelector('[data-v]').textContent = '−' + fmt(pAmt); }
+    var promo = $('coPromo'), n = BAG.count();
+    if (promo) {
+      if (n >= 3) { promo.hidden = false; promo.classList.add('is-unlocked'); $('coPromoFill').style.width = '100%'; $('coPromoText').innerHTML = '✓ <b>50% OFF</b> applied to your cheapest item!'; }
+      else if (n === 2) { promo.hidden = false; promo.classList.remove('is-unlocked'); $('coPromoFill').style.width = '66%'; $('coPromoText').innerHTML = 'Add <b>1 more item</b> and get <b>50% OFF</b> your cheapest piece!'; }
+      else { promo.hidden = true; }
+    }
     document.querySelectorAll('[data-co-shipping]').forEach(function(el){ el.textContent = fmt(shippingFor()); });
     document.querySelectorAll('[data-co-total]').forEach(function(el){ el.textContent = fmt(total()); });
     $('coSubmit').disabled = BAG.items.length === 0;
