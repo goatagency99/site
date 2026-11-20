@@ -501,6 +501,7 @@
 /* ---------- Music interface (card back) ---------- */
 .music { display: flex; flex-direction: column; height: 100%; min-height: 0; }
 .music__head { display: flex; align-items: center; justify-content: center; position: relative; min-height: 32px; }
+@media (max-width: 640px) { .music__head { min-height: 22px; } }
 .music__title { margin: 0; font-size: 11px; font-weight: 600; letter-spacing: .18em; color: #fff; text-align: center; }
 .music__back {
   width: 32px; height: 32px; flex: 0 0 auto;
@@ -515,6 +516,7 @@
 .music__back:hover { background: rgba(255,255,255,.08); }
 .music__back:focus-visible { outline: 2px solid var(--play-blue); outline-offset: 2px; }
 .music__back svg { display: block; width: 14px; height: 14px; }
+@media (max-width: 640px) { .music__back { width: 24px; height: 24px; } .music__back svg { width: 11px; height: 11px; } }
 
 .music__search {
   display: flex; align-items: center; gap: 6px;
@@ -525,6 +527,7 @@
   padding: 0 4px 0 12px;
   background: rgba(255,255,255,.04);
 }
+@media (max-width: 640px) { .music__search { margin-top: 6px; height: 32px; } }
 .music__search:focus-within { border-color: rgba(255,255,255,.35); }
 .music__input {
   flex: 1 1 auto; min-width: 0;
@@ -546,6 +549,7 @@
 .music__input::-webkit-search-cancel-button, .music__input::-webkit-search-decoration { -webkit-appearance: none; appearance: none; display: none; }
 
 .music__tabs { display: flex; gap: 6px; margin-top: 16px; }
+@media (max-width: 640px) { .music__tabs { margin-top: 6px; } }
 .music__tab {
   flex: 1 1 0;
   height: 28px;
@@ -577,6 +581,7 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(255,255,255,.2) transparent;
 }
+@media (max-width: 640px) { .music__list { margin-top: 6px; } }
 .track {
   display: flex; align-items: center; gap: 8px;
   width: 100%;
@@ -732,7 +737,7 @@
   .obj[data-obj="passport"] { --dw-x: 1.1;  --dx: 55% !important; --dy: 74% !important; }
 }
 @media (max-width: 640px) {
-  .play { --obj-scale: 1; --card-w: min(59.4vw, 270px); --card-ratio: 0.86; }
+  .play { --obj-scale: 1; --card-w: min(59.4vw, 270px); --card-ratio: 0.67; }   /* taller card back: room for 5 playlist rows instead of 3 */
   .play__stage { height: 100vh; height: 100svh; }
   .card { top: 40%; transform: translate(-50%, calc(-50% + var(--kb-shift, 0px))); }   /* everything sits higher: free space at the bottom to scroll with the thumb */
   .obj { left: var(--mx); top: var(--my); width: var(--mw); --rot: var(--mr, 0deg); }   /* objects drag with one finger again; the empty space between them scrolls the page */
