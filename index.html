@@ -434,7 +434,7 @@
   left: 50%; top: 50%;
   width: var(--card-w);
   aspect-ratio: var(--card-ratio);
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, calc(-50% + var(--kb-shift, 0px)));
   z-index: 20;
   perspective: 1600px;
   -webkit-perspective: 1600px;
@@ -734,7 +734,7 @@
 @media (max-width: 640px) {
   .play { --obj-scale: 1; --card-w: min(59.4vw, 270px); --card-ratio: 0.86; }
   .play__stage { height: 100vh; height: 100svh; }
-  .card { top: 40%; transform: translate(-50%, -50%); }   /* everything sits higher: free space at the bottom to scroll with the thumb */
+  .card { top: 40%; transform: translate(-50%, calc(-50% + var(--kb-shift, 0px))); }   /* everything sits higher: free space at the bottom to scroll with the thumb */
   .obj { left: var(--mx); top: var(--my); width: var(--mw); --rot: var(--mr, 0deg); }   /* objects drag with one finger again; the empty space between them scrolls the page */
   .obj[data-obj="tag"] { z-index: 3; }   /* the hang tag sits on top of the art jeans */
   .obj[data-obj="money"] { left: 50%; transform: translate3d(calc(-50% + var(--tx)), var(--ty), 0) rotate(var(--rot)) scale(var(--s)); }
@@ -2831,6 +2831,24 @@
      3) MUSIC LIST / SEARCH
   ================================================================== */
   const list = $('musicList'), statusEl = $('musicStatus'), form = $('musicSearch'), query = $('musicQuery');
+  /* iPhone: the keyboard covers the bottom of the flipped card (search input + MUSIC/MUSIC VIDEO
+     tabs) while typing in the search box — shift the whole card up by however much of the visual
+     viewport the keyboard is covering, so the head/search/tabs stay above it. Reverts once the
+     field loses focus or the keyboard closes. */
+  (function keyboardShift() {
+    const vv = window.visualViewport;
+    const apply = () => {
+      if (!vv || !card.classList.contains('is-flipped') || document.activeElement !== query) { card.style.removeProperty('--kb-shift'); return; }
+      card.style.removeProperty('--kb-shift');   // measure from the un-shifted position first
+      const covered = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      const maxUp = Math.max(0, card.getBoundingClientRect().top - 12);   // never push the title off the top of the screen
+      const shift = Math.min(covered, maxUp);
+      card.style.setProperty('--kb-shift', shift > 40 ? `-${shift}px` : '0px');
+    };
+    if (vv) { vv.addEventListener('resize', apply); vv.addEventListener('scroll', apply); }
+    query.addEventListener('focus', () => setTimeout(apply, 60));
+    query.addEventListener('blur', () => { card.style.removeProperty('--kb-shift'); });
+  })();
   const tabs = [...document.querySelectorAll('.music__tab')];
   let tab = 'music';
   let playlist = SEED.slice();   // current playlist items ("GOOD VIBES ONLY")
