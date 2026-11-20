@@ -487,6 +487,10 @@
     document.documentElement.lang = LANG;
     document.querySelectorAll('[data-i18n]').forEach(function(el){ var k = el.getAttribute('data-i18n'); if (t(k)) el.textContent = t(k); });
     document.querySelectorAll('[data-i18n-ph]').forEach(function(el){ var k = el.getAttribute('data-i18n-ph'); if (t(k)) el.setAttribute('placeholder', t(k)); });
+    // The "remaining 50%" consent line links out to the full Pay in 2 terms (PDF) on the "50%" word itself,
+    // in every language — the sentence stays exactly as translated, only that one word becomes a link.
+    (function(){ var el = document.querySelector('[data-i18n="splitConsent"]'); if (!el) return; var raw = t('splitConsent'); if (!raw) return;
+      el.innerHTML = raw.replace(/50\s?%/, function(m){ return '<a href="/assets/pay-in-2-terms.pdf" target="_blank" rel="noopener" style="text-decoration:underline">' + m + '</a>'; }); })();
     document.querySelectorAll('.co-lang button').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.lang === LANG ? 'true' : 'false'); });
     updatePaymentView(); renderBag();
   }
