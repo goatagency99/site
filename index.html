@@ -1822,7 +1822,18 @@
     const go = new URLSearchParams(location.search).get('go');
     if (go) {
       const [gd, col, sb] = go.split('-'), sec = document.getElementById(gd === 'men' ? 'shop' : 'shopWomen');
-      if (sec) { sec.querySelector(`.shop__tab[data-key="${col}"]`)?.click(); if (sb) [...sec.querySelectorAll('button')].find(x => x.textContent.trim().toLowerCase() === sb)?.click(); setTimeout(() => sec.scrollIntoView(), 50); }
+      if (sec) {
+        sec.querySelector(`.shop__tab[data-key="${col}"]`)?.click();
+        if (sb) [...sec.querySelectorAll('button')].find(x => x.textContent.trim().toLowerCase() === sb)?.click();
+        // Land with the tab row pinned flush at the top (like tapping the tab normally), not at the
+        // top of #shop — which would leave the LOOKBOOK row (and anything above it) peeking above the
+        // nav. Re-asserted a few times because images above #shop (hero, LOOKBOOK row) can still be
+        // loading and shift the layout after the first scroll.
+        const tabs = sec.querySelector('.shop__tabs');
+        const pinToTop = () => { if (!tabs) return; window.scrollTo({ top: scrollY + tabs.getBoundingClientRect().top - 8 }); };
+        requestAnimationFrame(() => requestAnimationFrame(pinToTop));
+        setTimeout(pinToTop, 50); setTimeout(pinToTop, 200); setTimeout(pinToTop, 450); setTimeout(pinToTop, 800);
+      }
       history.replaceState(null, '', location.pathname);
     }
   } catch {}
