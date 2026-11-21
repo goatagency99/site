@@ -33,7 +33,7 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
   "model": {"height":176,"weight":62,"size":"36","modelMedia":[]},
   "apparelModel": {"height":184,"weight":74,"size":"M","modelMedia":[0],"text":"Model measurements: 184 cm & 74 kg. Model is wearing size M"},
   "palettes": {"jeans":[{"id":"burgundy","name":"Burgundy","hex":"#6B2535"},{"id":"grey","name":"Grey","hex":"#565656"},{"id":"red","name":"Red","hex":"#c9002e"},{"id":"blue","name":"Blue","hex":"#057CA7"},{"id":"brown","name":"Brown","hex":"#422A10"},{"id":"purple","name":"Purple","hex":"#8B4FD8"},{"id":"pink","name":"Pink","hex":"#E57BBE"},{"id":"green","name":"Green","hex":"#144E13"},{"id":"orange","name":"Orange","hex":"#E0701A"},{"id":"white","name":"White","hex":"#FFFFFF"}],"skinny":["burgundy","green","blue","white","purple","grey","red","pink","orange","brown"],"black":[{"id":"black","name":"Black","hex":"#111111"}],"jacket":["burgundy","pink","blue","red","white","brown","purple","orange","grey","green"]},
-  "collections": [{"key":"denim","label":"DENIM"},{"key":"tops","label":"TOPS"},{"key":"bottoms","label":"BOTTOMS"},{"key":"accessories","label":"ACCESSORIES"},{"key":"sales","label":"SALES"},{"key":"looks","label":"LOOKBOOK"}],
+  "collections": [{"key":"denim","label":"DENIM"},{"key":"tops","label":"TOPS"},{"key":"bottoms","label":"BOTTOMS"},{"key":"sales","label":"SALES"},{"key":"accessories","label":"ACCESSORIES"},{"key":"looks","label":"LOOKBOOK"}],
   "womenCollections": [{"key":"tops","label":"TOPS"},{"key":"bottoms","label":"BOTTOMS"},{"key":"accessories","label":"ACCESSORIES"},{"key":"sales","label":"SALES"},{"key":"looks","label":"LOOKBOOK"}],
   "customizeCollections": [{"key":"bags","label":"BAGS"}],
   "womenFeatured": {"tops":["w-burgundy-baby-top","w-delulu-blazer-2","w-satin-shirt","w-sporty-top-ivory","w-black-windbreaker","w-burgundy-burberry-windbreaker","w-tiramisu-hoodie-black","w-tiramisu-hoodie-burgundy","w-black-logo-windbreaker","w-white-logo-windbreaker","w-burgundy-long-sleeve","w-logo-vest","w-tiramisu-hoodie-white","w-tiramisu-hoodie-grey","w-skyblue-hoodie","w-burgundy-zip-hoodie","w-tiramisu-hoodie-pink","w-sporty-top","w-white-baby-top","w-blue-zip-hoodie","w-hot-pink-zip-hoodie","w-red-zip-hoodie","w-pink-zip-hoodie","w-muse-blazer","w-hg-delulu-blazer","w-fuchsia-baby-top","w-blue-baby-top","w-red-baby-top","w-white-baby-top-1","w-pink-baby-top","w-no-bra-tank-top"],"bottoms":["w-sequin-lace-short","w-logo-leggings","w-mini-bag-jeans-blackwash-black","w-mini-bag-jeans-burgundy","w-lace-jean","w-transparent-jean","w-black-wind-pants","w-burgundy-wind-pants","w-grey-pants","w-pink-pants","w-logo-flare-jeans","w-logo-flare-leggings","w-walking-art-black-jeans","w-mini-bag-jeans-blackwash-burgundy","w-mini-bag-jeans-black","w-red-pants","w-black-pants"],"jackets":["w-white-logo-windbreaker","w-black-logo-windbreaker"],"accessories":["w-white-shoulder-bag","w-burgundy-shoulder-bag"]},
@@ -2085,6 +2085,22 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "gallery": [{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/2DF973A7-047A-4C53-8F96-EC4764ADA534.jpg?v=1769272869&width=1400","w":1200,"h":1600},{"src":"assets/img/gallery/w-walking-art-blue-1-88c048e1.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-walking-art-blue-2-54c0c482.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-walking-art-blue-3-9ca68121.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-walking-art-blue-4-aba42ddc.webp","w":1024,"h":1534}],
       "needsBody": true
     },
+    "w-crochet-jeans": {
+      "gender": "women",
+      "id": "bymarccc:w-crochet-jeans",
+      "title": "Crochet Jeans",
+      "price": 450,
+      "currency": "RON",
+      "cut": "Womenswear",
+      "collections": ["bottoms"],
+      "details": ["All clothing is custom made.","100% Organic Cotton"],
+      "description": "Relaxed fit washed black jeans with a crochet granny-square stripe down the side.",
+      "unavailable": [],
+      "colours": [{"id":"default","name":"As shown","hex":"#dcdcd8"}],
+      "chart": ["34","36","38","40","42"],
+      "gallery": [{"src":"assets/img/gallery/w-crochet-jeans-new-5-1ebdc22b.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-crochet-jeans-new-1-fa9b1147.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-crochet-jeans-new-2-ba4922e5.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-crochet-jeans-new-3-52e6775b.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-crochet-jeans-new-4-4d833db9.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-crochet-jeans-1-7d434371.webp","w":1024,"h":1534}],
+      "needsBody": true
+    },
     "w-not-from-paris-jeans": {
       "gender": "women",
       "id": "shopify:not-from-paris-jeans",
@@ -2114,23 +2130,7 @@ window.BYMARCCC_PRODUCT_DATA = /*BEGIN-JSON*/{
       "unavailable": [],
       "colours": [{"id":"default","name":"As shown","hex":"#dcdcd8"}],
       "chart": ["34","36","38","40","42"],
-      "gallery": [{"src":"assets/img/gallery/w-art-jean-front-a411b6ad.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-art-jean-photo-2-db3741a1.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-art-jean-photo-3-77e59626.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-art-jean-photo-4-02c400e0.webp","w":1024,"h":1534},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/IMG_3584.jpg?v=1759095294&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/IMG_3585.jpg?v=1&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/IMG_3586.jpg?v=1&width=1400","w":1200,"h":1600}],
-      "needsBody": true
-    },
-    "w-crochet-jeans": {
-      "gender": "women",
-      "id": "bymarccc:w-crochet-jeans",
-      "title": "Crochet Jeans",
-      "price": 450,
-      "currency": "RON",
-      "cut": "Womenswear",
-      "collections": ["bottoms"],
-      "details": ["All clothing is custom made.","100% Organic Cotton"],
-      "description": "Relaxed fit washed black jeans with a crochet granny-square stripe down the side.",
-      "unavailable": [],
-      "colours": [{"id":"default","name":"As shown","hex":"#dcdcd8"}],
-      "chart": ["34","36","38","40","42"],
-      "gallery": [{"src":"assets/img/gallery/w-crochet-jeans-new-1-fa9b1147.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-crochet-jeans-new-2-ba4922e5.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-crochet-jeans-new-3-52e6775b.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-crochet-jeans-new-4-4d833db9.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-crochet-jeans-new-5-1ebdc22b.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-crochet-jeans-1-7d434371.webp","w":1024,"h":1534}],
+      "gallery": [{"src":"assets/img/gallery/w-art-jean-photo-3-77e59626.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-art-jean-front-a411b6ad.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-art-jean-photo-2-db3741a1.webp","w":1024,"h":1534},{"src":"assets/img/gallery/w-art-jean-photo-4-02c400e0.webp","w":1024,"h":1534},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/IMG_3584.jpg?v=1759095294&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/IMG_3585.jpg?v=1&width=1400","w":1200,"h":1600},{"src":"https://cdn.shopify.com/s/files/1/0955/7835/8108/files/IMG_3586.jpg?v=1&width=1400","w":1200,"h":1600}],
       "needsBody": true
     },
     "w-sequin-lace-short": {
