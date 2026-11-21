@@ -9,6 +9,7 @@
   * { box-sizing: border-box; }
   body { margin: 0; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; color: var(--ink); background: #fff; line-height: 1.5; }
   header { border-bottom: 1px solid var(--line); padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; }
+  header .back { text-decoration: none; color: var(--ink); font-size: 14px; font-weight: 600; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; }
   header .brand { font-weight: 700; letter-spacing: .04em; text-decoration: none; color: var(--ink); font-size: 15px; }
   main { max-width: 720px; margin: 0 auto; padding: 32px 20px 64px; }
   h1 { font-size: 26px; margin: 0 0 6px; }
@@ -26,7 +27,7 @@
 </style>
 </head>
 <body>
-<header><a class="brand" href="index.html">BYMARCCC</a><span style="font-size:12.5px;color:var(--muted)">Pay in 2 &mdash; Agreement</span></header>
+<header><a class="back" href="/" onclick="event.preventDefault();if(history.length>1){history.back();}else{try{window.close();}catch(e){}setTimeout(function(){location.href='/';},300);}" aria-label="Back">&larr; Back</a><a class="brand" href="index.html">BYMARCCC</a><span style="font-size:12.5px;color:var(--muted)">Pay in 2 &mdash; Agreement</span></header>
 <main>
   <h1>Pay in 2 &mdash; Agreement</h1>
   <p class="sub">This page explains the terms of bymarccc's own 2-payment option at checkout. It is a payment plan offered directly by bymarccc through your card issuer &mdash; it is not provided, processed or guaranteed by PayPal or any other third party.</p>

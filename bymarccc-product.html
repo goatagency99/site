@@ -2312,7 +2312,7 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
      is bymarccc's own (2 payments, card-only), never PayPal's. */
   function splitPayBodyInner() {
     const [a, b] = splitTwo(priceMinor());
-    return `<p>Split this order into 2 card payments: <strong>${fmtMinor(a)}</strong> today and <strong>${fmtMinor(b)}</strong> in 30 days, charged automatically to the same card. No PayPal account needed, no interest, no fees.</p><button type="button" class="pdp-btn pdp-split-go" data-split-go>CHECKOUT · PAY IN 2</button><p class="pdp-bar__msg pdp-split-msg" role="status" aria-live="polite"></p><p class="pdp-service__terms"><a href="pay-in-2-terms.html" target="_blank" rel="noopener noreferrer">Terms and conditions apply.</a></p>`;
+    return `<p>Split this order into 2 card payments: <strong>${fmtMinor(a)}</strong> today and <strong>${fmtMinor(b)}</strong> in 30 days, charged automatically to the same card. No interest, no fees.</p><button type="button" class="pdp-btn pdp-split-go" data-split-go>CHECKOUT · PAY IN 2</button><p class="pdp-bar__msg pdp-split-msg" role="status" aria-live="polite"></p><p class="pdp-service__terms"><a href="pay-in-2-terms.html" target="_blank" rel="noopener noreferrer">Terms and conditions apply.</a></p>`;
   }
   const splitRow = SERVICE.splitPay.enabled && hasPrice ? svcRow(ICON.pay, '', splitPayBodyInner(), 'svc-split') : null;
   function renderSplit() {
@@ -3351,9 +3351,9 @@ html.is-vp-drag, html.is-vp-drag * { -webkit-user-select: none !important; user-
         src:   M + 'talk-is-cheap.a.mp4',
         video: M + 'talk-is-cheap.mp4', poster: M + 'talk-is-cheap.jpg',
         thumb: 'assets/img/thumb-talk-is-cheap.jpg' },
-      { id: 'billie-lunch', title: "Billie Eilish - LUNCH", channel: '', duration: '3:22',
-        src:   M + 'lunch.a.mp4',
-        video: M + 'lunch.mp4', poster: M + 'lunch.jpg',
+      { id: 'billie-lunch', title: "Billie Eilish - LUNCH", channel: '', duration: '2:59',
+        src:   M + 'lunch-v2.a.mp4',
+        video: M + 'lunch-v2.mp4', poster: M + 'lunch.jpg',
         thumb: 'assets/img/thumb-artist-billie-eilish.jpg' },
       { id: 'meant-to-be', title: "Stay Flee Get Lizzy x Central Cee - Meant To Be", channel: '', duration: '3:14',
         src:   M + 'meant-to-be.a.mp4',
