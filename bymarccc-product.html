@@ -506,7 +506,7 @@ body.is-custom-bag-page #gallery { display: none; }
 .pdp-bars i { display: block; width: 18px; height: 2px; border-radius: 1px; background: rgba(17,17,17,.28); transition: background .25s; }
 .pdp-bars i.is-on { background: #111; }
 /* SSENSE-style vertical gallery (baby tops, phones): swipe up/down, thin vertical dashes on the right */
-.pdp-gallery.is-vert { touch-action: pinch-zoom; }
+.pdp-gallery.is-vert { touch-action: pan-x pinch-zoom; }   /* vertical drags belong to the photos (iPhone: the page must not claim them on the first pixels) */
 .pdp-gallery.is-vert .pdp-gallery__track { flex-direction: column; }
 .pdp-gallery.is-vert .pdp-gallery__slide { flex: 0 0 100%; width: 100%; }
 .pdp-gallery.is-vert .pdp-bars { display: flex; flex-direction: column; gap: 8px; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); z-index: 3; left: auto; bottom: auto; }
@@ -1495,7 +1495,7 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
   if (TOUCH) {
     const fk = (e, t) => ({ fake: true, pointerId: 'T', clientX: t.clientX, clientY: t.clientY, target: e.target, preventDefault: () => { if (e.cancelable) e.preventDefault(); } });
     gallery.addEventListener('touchstart', e => { if (e.touches.length > 1) { drag = null; zoomPointers.clear(); layout(0, false); return; } onDown(fk(e, e.touches[0])); }, { passive: true });
-    gallery.addEventListener('touchmove', e => { if (e.touches.length > 1 || !drag) return; onMove(fk(e, e.touches[0])); }, { passive: false });
+    gallery.addEventListener('touchmove', e => { if (e.touches.length > 1 || !drag) return; if (VERT && !drag.axis && e.cancelable) e.preventDefault(); onMove(fk(e, e.touches[0])); }, { passive: false });   /* iPhone: block the page scroll from the very first move, otherwise Safari takes the gesture and the photo never changes */
     const tEnd = e => { const t = e.changedTouches[0]; if (!t) return; endDrag(fk(e, t)); zoomPointers.clear(); };
     gallery.addEventListener('touchend', tEnd); gallery.addEventListener('touchcancel', tEnd);
   }
