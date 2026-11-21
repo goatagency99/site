@@ -10,6 +10,7 @@ It is the most fragile part of the site. It was rebuilt several times and every 
 - The bottom dock in all 4 pages (`index.html`, `bymarccc-product.html`, `checkout.html`, `members.html`): `playTrack()` must call `window.BYMARCCC.audioTrack.play(t)` first. Without it a song picked from search is not in the queue and never mixes.
 - Playlist, player script and the page router `BYM_NAV` are duplicated in the 4 pages: keep the copies identical.
 - The playlist exists in ALL 4 pages (`const SEED = [` in index.html, `var SEED = [` in bymarccc-product.html, checkout.html, members.html). Adding a song = add the SAME object to the list in all 4 pages (same id, title, src, thumb). The guard test fails if the 4 lists differ.
+- Artist thumbs (owner's rule): every song by Doja Cat, Ice Spice, Ariana Grande, Central Cee, Drake, Nemzzz, Billie Eilish or Pop Smoke uses `thumb: 'assets/img/thumb-artist-<doja-cat|ice-spice|ariana-grande|central-cee|drake|nemzzz|billie-eilish|pop-smoke>.jpg'`. For collabs use the first of these artists named in the title.
 - A new song only mixes if: audio-only AAC file named `name.a.mp4` in `assets/media/` (not .m4a: Cloudflare ignores Range on .m4a), real `duration`; unique `id`; longer than 45 s (shorter songs are never mixed, by design). Never guess media URLs. Cloudinary is no longer used (the account is disabled): every song lives in `assets/media/` on Cloudflare — never add a `CLD + ...` source.
 
 ## Things that look redundant but are REQUIRED (iPhone) — never "simplify" them
