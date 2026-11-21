@@ -2912,7 +2912,7 @@
       b.append(img, meta, du);   // no play/pause circle — the row itself plays / pauses
       b.addEventListener('pointerdown', () => { if (tab === 'video' && t.video) window.BYMARCCC_VP?.prefetch?.(t); }, { passive: true });
       b.addEventListener('click', () => {
-        if (tab === 'video') { if (t.yt) { window.BYMARCCC_VP?.stop?.(); playFrom([t], 0); return; } if (t.video && window.BYMARCCC_VP) { audio.pause(); window.BYMARCCC_VP.play(t); window.BYMARCCC_VP.pip?.(); markCurrent(); } return; }   // MUSIC VIDEO → floating mini player; the playlist stays open behind it
+        if (tab === 'video') { if (t.yt) { window.BYMARCCC_VP?.stop?.(); playFrom([t], 0); return; } if (t.video && window.BYMARCCC_VP) { mixStop(); audio.pause(); window.BYMARCCC_VP.play(t); window.BYMARCCC_VP.pip?.(); markCurrent(); } return; }   // MUSIC VIDEO → floating mini player; the playlist stays open behind it. mixStop() first: audio.pause() alone doesn't silence the crossfade decks mid-blend, so the old song kept playing under the new video.
         // MUSIC → this row is the player: first tap plays, next taps pause / resume
         if (t.src && typeof miniItem !== 'undefined' && miniItem && miniItem.id === t.id) { audio.paused ? audio.play().catch(() => {}) : audio.pause(); return; }
         window.BYMARCCC_VP?.stop ? window.BYMARCCC_VP.stop() : window.BYMARCCC_VP?.pause();   // a music track replaces the music video: its floating player closes
