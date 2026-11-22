@@ -1839,6 +1839,11 @@
         const pinToTop = () => { if (!tabs) return; window.scrollTo({ top: scrollY + tabs.getBoundingClientRect().top - 8 }); };
         requestAnimationFrame(() => requestAnimationFrame(pinToTop));
         setTimeout(pinToTop, 50); setTimeout(pinToTop, 200); setTimeout(pinToTop, 450); setTimeout(pinToTop, 800);
+        // Slow connections (LTE): the images above #shop keep loading for seconds and push it down — keep re-pinning
+        // (every 120 ms, up to 10 s) until the visitor touches / scrolls the page themselves.
+        { let n = 0, off = false; const stop = () => { off = true; ['touchstart', 'wheel', 'keydown', 'pointerdown'].forEach(ev => removeEventListener(ev, stop, true)); };
+          ['touchstart', 'wheel', 'keydown', 'pointerdown'].forEach(ev => addEventListener(ev, stop, { capture: true, passive: true }));
+          const iv = setInterval(() => { if (off || ++n > 83) { clearInterval(iv); return; } if (tabs && Math.abs(tabs.getBoundingClientRect().top - 8) > 2) pinToTop(); }, 120); }
       }
       history.replaceState(null, '', location.pathname);
     }
