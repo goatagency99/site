@@ -587,10 +587,14 @@ html.bym-memlock #pPrice, html.bym-memlock #barPrice { display: none !important;
 .pdp-sizemsg { width: 100%; margin: 2px 0 0; text-align: center; font-size: 12px; color: #c8102e; min-height: 0; }
 .pdp-modelnote { display: none; }
 @media (max-width: 899px) {
-  .pdp-hwbelow { margin: 8px 16px 6px; text-align: center; }
+  .pdp-hwbelow { position: relative; z-index: 2; margin: -18px 32px 6px; text-align: center; pointer-events: none; }
+  .pdp-hwbelow + .pdp-info { padding-top: 0; }
+  .pdp-gallery:has(+ .pdp-hwbelow) :is(.pdp-hanger, .pdp-wish) { bottom: 20px; }
+  .pdp-bar:has(#barMsg.is-hw-error:not(:empty)) { row-gap: 4px; }
+  #barMsg.is-hw-error { margin: 0; }
   .pdp-hwbelow #hwToggle { display: block; width: 100%; max-width: 360px; margin: 0 auto; min-height: 36px; padding: 0 12px; border: 1px solid #111; border-radius: 9px; background: #fff; color: #111; font-size: 13px; letter-spacing: .02em; text-align: center; cursor: pointer; pointer-events: auto; }
   .pdp-hwbelow #hwToggle[hidden] { display: none; }
-  .pdp-hwbelow .pdp-hw { max-width: 360px; margin: 0 auto; border: 1px solid #111; border-radius: 9px; background: #fff; }
+  .pdp-hwbelow .pdp-hw { max-width: 360px; margin: 0 auto; padding-block: 3px; border: 1px solid #111; border-radius: 9px; background: #fff; }
 }
 @media (max-width: 899px) { .bym-modelbelow .pdp-modelnote:not([hidden]) { display: block; margin: 0 0 -4px; text-align: center; font-size: 13px; line-height: 1.3; color: #333; } .bym-modelbelow #modelText { display: none; } }
 .pdp-sizemsg:empty { display: none; }
@@ -1635,11 +1639,21 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
   const hwForm = $('hwForm'), hwH = $('hwH'), hwW = $('hwW'), hwToggle = $('hwToggle');
   const HW = { height: [120, 230], weight: [30, 250] };
   hwToggle.hidden = !PRODUCT.needsBody;
-  /* phone, every product that needs height & weight (women + men): the "Fill in your height and weight" bar sits under the photo (above the sizes), not on it */
-  if (PRODUCT.needsBody && matchMedia('(max-width: 899px)').matches) {
-    const box = document.createElement('div'); box.className = 'pdp-hwbelow'; box.id = 'hwBelow';
-    const mn = $('modelNote'); (mn && mn.parentNode ? mn.parentNode : $('sizes').parentNode).insertBefore(box, mn ? mn.nextSibling : $('sizes'));
-    box.append(hwToggle, hwForm);
+  // Keep the mobile measurement controls at the photo edge, outside the swipe area.
+  if (PRODUCT.needsBody) {
+    const home = hwToggle.parentNode;
+    const box = document.createElement('div');
+    box.className = 'pdp-hwbelow';
+    const placeHw = () => {
+      if (deskMQ.matches) {
+        if (box.isConnected) { home.append(hwToggle, hwForm); box.remove(); }
+      } else {
+        gallery.after(box);
+        box.append(hwToggle, hwForm);
+      }
+    };
+    deskMQ.addEventListener ? deskMQ.addEventListener('change', placeHw) : deskMQ.addListener(placeHw);
+    placeHw();
   }
   const hwVal = (inp, [lo, hi]) => { const v = Number(inp.value); return inp.value.trim() !== '' && Number.isFinite(v) && v >= lo && v <= hi ? Math.round(v) : null; };
   const hwMark = (inp, ok, msgText) => { hwForm.classList.toggle('has-err', !ok || hwForm.querySelector('.is-invalid:not(#' + inp.id + ')') !== null); inp.classList.toggle('is-invalid', !ok); inp.setAttribute('aria-invalid', String(!ok)); const e = $(inp.id + 'Err'); e.hidden = ok; if (!ok) e.textContent = msgText; };
@@ -1657,7 +1671,10 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
   function hwRender() {
     const r = hwCheck(false);
     hwToggle.classList.toggle('is-filled', r.ok);
-    if (r.ok && barMsg.textContent.startsWith('Please fill')) barMsg.textContent = '';
+    if (r.ok && barMsg.classList.contains('is-hw-error')) {
+      barMsg.textContent = '';
+      barMsg.classList.remove('is-hw-error');
+    }
     hwToggle.textContent = r.ok ? `${r.h} cm · ${r.w} kg` : 'Fill in your height and weight';
   }
   hwToggle.addEventListener('click', () => { if (hwForm.hidden) { hwOpen(); } else { hwClose(); } });
@@ -2246,9 +2263,16 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
     adding = true; setTimeout(() => { adding = false; }, 400);
     if (PRODUCT.customBag) { const ok = await cbHandleAddToBag(msg, btn); return ok; }
     const hw = hwCheck(true);
+    if (msg === barMsg) msg.classList.toggle('is-hw-error', !hw.ok);
     if (!hw.ok) {
       msg.classList.remove('is-ok'); msg.textContent = 'Please fill in your height and weight.';
-      hwOpen(hw.first); hw.first.scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'center' });
+      hwOpen(hw.first);
+      const formRect = hwForm.getBoundingClientRect();
+      const formVisible = formRect.top >= $('pdpHeader').getBoundingClientRect().bottom
+        && formRect.bottom <= $('bar').getBoundingClientRect().top;
+      if (deskMQ.matches || msg !== barMsg || !formVisible) {
+        hw.first.scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'center' });
+      }
       return false;
     }
     if (DESIGNS.length && !state.design && $('sizeMsg')) { msg.textContent = ''; const sm = $('sizeMsg'); sm.textContent = 'Please select a design.'; sm.scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'center' }); return false; }
