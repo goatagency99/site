@@ -2637,7 +2637,7 @@ body.pdp .bmp__now[hidden] ~ .bmp__sbtn { display: none; }   /* product pages: s
     const hit = txt => { const t = String(txt || '').toLowerCase(); return words.every(w => t.includes(w)); };
     const P = products().filter(([k, p]) => hit(p.title + ' ' + (p.cut || '') + ' ' + (p.colours || []).map(c => c.name).join(' ') + ' ' + (p.gender || ''))).slice(0, 12);
     const S = list().filter(t => hit(t.title)).slice(0, 10);
-    const fmt = p => typeof p.price === 'number' ? (typeof p.salePrice === 'number' ? p.salePrice : p.price) + ' ' + (p.currency || 'RON') : '';
+    const fmt = p => { if (typeof p.price !== 'number') return ''; const v = typeof p.salePrice === 'number' ? p.salePrice : p.price, c = p.currency || 'RON'; return c === 'RON' && window.BYM_FMT ? window.BYM_FMT(v) : v + ' ' + c; };
     res.innerHTML = (P.length ? '<div class="bmp__h">Products</div>' + P.map(([k, p]) => `<a class="bmp__it" href="bymarccc-product.html?p=${encodeURIComponent(k)}" data-go><img class="p" src="${esc(abs(((p.lookCover || (p.gallery || [])[0]) || {}).src))}" alt="" loading="lazy"><span>${esc(p.title)} <em>${p.gender === 'women' ? '· Women' : p.gender === 'men' ? '· Men' : ''}</em></span><small>${esc(fmt(p))}</small></a>`).join('') : '')
       + (S.length ? '<div class="bmp__h">Songs</div>' + S.map(t => `<button class="bmp__it" type="button" data-song="${esc(t.id)}"><img src="${esc(abs(t.thumb || t.poster))}" alt="" loading="lazy"><span>${esc(t.title)}</span><small>${esc(t.duration || '')}</small></button>`).join('') : '')
       || '<div class="bmp__none">No results</div>';

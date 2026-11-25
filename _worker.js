@@ -2010,7 +2010,7 @@ __name(orderRecommendations, "orderRecommendations");
 // GEO PRICING — one place for country → currency / markup / shipping. Used for (1) the prices the
 // visitor sees (injected into every HTML page as window.BYM_GEO) and (2) what Stripe charges.
 // Base prices in the catalogue are RON. Romania stays exactly as before (RON, no markup, SHIPPING_RON).
-//   US + rest of world: USD, +40%, $30 shipping · UK: GBP, +40%, £25 shipping
+//   US + rest of world (incl. Argentina, Costa Rica): USD, +40%, $30 shipping · UK: GBP, +40%, £25 shipping
 //   Europe: local currency (EUR / CHF / PLN / CZK / HUF / SEK / DKK / NOK), +30%, €15 shipping (converted)
 //   Bulgaria (euro since 2026): EUR, +20%, €15 shipping
 // Exchange rates: ECB via frankfurter.dev, cached 6h; fallback below if the fetch fails.
@@ -2026,7 +2026,8 @@ var GEO_COUNTRIES = {
   MD: ["Moldova", "EUR"], IS: ["Iceland", "EUR"],
   CH: ["Switzerland", "CHF"], LI: ["Liechtenstein", "CHF"], PL: ["Poland", "PLN"], CZ: ["Czechia", "CZK"], HU: ["Hungary", "HUF"],
   SE: ["Sweden", "SEK"], DK: ["Denmark", "DKK"], NO: ["Norway", "NOK"],
-  GB: ["United Kingdom", "GBP"], US: ["United States", "USD"], CA: ["Canada", "CAD"], AU: ["Australia", "AUD"]
+  GB: ["United Kingdom", "GBP"], US: ["United States", "USD"], CA: ["Canada", "CAD"], AU: ["Australia", "AUD"],
+  AR: ["Argentina", "USD"], CR: ["Costa Rica", "USD"]
 };
 var GEO_RATES_MEM = null;
 async function geoRates() {
@@ -2060,7 +2061,7 @@ function geoRule(cc, rates) {
   const row = GEO_COUNTRIES[cc];
   if (cc === "RO" || (!row && cc === "")) return { cc: "RO", cur: "RON", fx: 1, ship: Number(env("SHIPPING_RON", "20")) || 0 };
   let cur, mk, ship;
-  if (cc === "US" || !row) { cur = "USD"; mk = 1.4; ship = 30; }
+  if (cc === "US" || !row || row[1] === "USD") { cur = "USD"; mk = 1.4; ship = 30; }
   else if (cc === "GB") { cur = "GBP"; mk = 1.4; ship = 25; }
   else if (cc === "CA" || cc === "AU") { cur = row[1]; mk = 1.4; ship = Math.ceil(30 * (r[cur] || 1) / (r.USD || 1)); }
   else if (cc === "BG") { cur = "EUR"; mk = 1.2; ship = 15; }
