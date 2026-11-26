@@ -560,6 +560,7 @@ html.bym-memlock #pPrice, html.bym-memlock #barPrice { display: none !important;
 .pdp-designs .pdp-size--new::after { content: 'NEW'; position: absolute; left: 50%; top: -10px; transform: translateX(-50%); color: #111; font: 600 7px/1 Arial, sans-serif; letter-spacing: .12em; white-space: nowrap; }
 /* BABY TOP family: the colours as small photos (SSENSE-style strip); each opens that colour, same design kept */
 .pdp-family { margin: -14px -16px 10px; }
+.pdp-hwbelow + .pdp-info .pdp-family { margin-top: 6px; }   /* a little air between the height & weight button and the colour photos */
 .pdp-family[hidden] { display: none; }
 .pdp-family__label { display: flex; justify-content: center; gap: 6px; margin: 4px 0 0; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #6f6f6f; }
 .pdp-family__label b { color: #111; font-weight: 500; }
@@ -985,6 +986,8 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
       </div>
     </section>
   </div>
+  <!-- The Zebra Patch Collection ad: every MEN product page, right above RECOMMENDATIONS (filled by assets/zebra-ad.js) -->
+  <section class="zad" id="zebraAd" hidden></section>
   <!-- RECOMMENDATIONS: similar pieces (same type / category / gender), one continuous grey strip, each card flips through its own photos -->
   <section class="pdp-reco" id="reco" hidden aria-label="Recommendations">
     <h2 class="pdp-reco__title">RECOMMENDATIONS</h2>
@@ -1541,6 +1544,7 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
   (() => {
     if (!IN_FAMILY) return;
     const row = $('familyRow'); if (!row) return;
+    gallery.querySelectorAll('.pdp-gallery__peek').forEach(e => e.remove());   // a page restored by the router can still hold the previous colour preview on top of the photos
     const slug = v => String(v || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     const photoOf = (fp, design) => { if (IS_LOOKBOOK && fp.lookCover) return fp.lookCover.src || fp.lookCover; const g = fp.gallery || [], di = fp.designImages || {}, k = slug(design); const it = (k && di[k] != null && g[di[k]]) || g[0]; return it && (it.src || it); };
     const urlOf = k => 'bymarccc-product.html?p=' + k + (state.design ? '&d=' + encodeURIComponent(state.design) : '');
@@ -1603,7 +1607,7 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
       if (a.dataset.k === KEY) { preview(KEY); return; }
       going = true; const y = scrollY;
       const url = urlOf(a.dataset.k);
-      if (window.BYM_NAV && BYM_NAV.navigate) Promise.resolve(BYM_NAV.navigate(url, { push: false })).then(() => { requestAnimationFrame(() => window.scrollTo(0, y)); });
+      if (window.BYM_NAV && BYM_NAV.navigate) Promise.resolve(BYM_NAV.navigate(url, { push: false })).then(() => { if (peek) peek.hidden = true; /* the page we left is kept by the router: it must not come back with this preview still on top of its photos */ requestAnimationFrame(() => window.scrollTo(0, y)); });
       else location.replace(url);
     };
     row.addEventListener('scroll', () => {
@@ -4894,6 +4898,17 @@ body.pdp .bmp__now[hidden] ~ .bmp__sbtn { display: none; }   /* product pages: s
     box.hidden = false;
   })();
   </script>
+<script>
+  (() => {
+    const host = document.getElementById('zebraAd'); if (!host) return;
+    const C = window.BYMARCCC_CATALOG && window.BYMARCCC_CATALOG.CATALOG;
+    const P = C && C[(new URLSearchParams(location.search).get('p') || '').toLowerCase()];
+    if (!P || !(P.genders || [P.gender || 'men']).includes('men')) { host.hidden = true; return; }   // men's pages only
+    const go = () => window.BYM_ZEBRA_AD && window.BYM_ZEBRA_AD.mount(host);
+    if (window.BYM_ZEBRA_AD) return go();
+    const sc = document.createElement('script'); sc.src = 'assets/zebra-ad.js?v=1'; sc.onload = go; document.body.appendChild(sc);
+  })();
+</script>
 <!-- music on this page when it was opened directly: auto-next, 10 s DJ mix, lock-screen artwork (idle when the homepage engine runs) -->
 <script src="assets/mix-lite.js" defer></script>
 </body>
