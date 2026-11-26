@@ -3511,6 +3511,9 @@ var pages_template_worker_default = {
     { const u = new URL(request.url); if (/^\/bymarccc-product(\.html)?$/.test(u.pathname) && u.searchParams.get("p") === "w-sporty-top-ecru") { u.searchParams.set("p", "w-sporty-top-ivory"); return Response.redirect(u.toString(), 301); } }   // renamed: ecru → ivory
     { const u = new URL(request.url); const m = /^\/(tops|bottoms?|denim|accessor\w*|accesor\w*|sales?|lookbook)[-_]?(women|men|woman|man)?(?:s?wear|swer|s)?\/?$/i.exec(u.pathname);   // short links for Instagram: /lookbook, /bottomwomenswear, /denimmenswear ... -> homepage tab (client opens it via ?go=)
       if (m) { const w = m[1].toLowerCase(), g = /^wom/i.test(m[2] || "") || !m[2] ? "women" : "men", col = /^top/.test(w) ? "tops" : /^bottom/.test(w) || (w === "denim" && g === "women") ? "bottoms" : w === "denim" ? "denim" : /^acce?s/.test(w) ? "accessories" : /^sale/.test(w) ? "sales" : "looks"; const sub = w === "denim" && g === "women" ? "-denim" : ""; return Response.redirect(u.origin + "/?go=" + g + "-" + col + sub, 302); } }
+    { const u = new URL(request.url); let pth = u.pathname; try { pth = decodeURIComponent(pth); } catch {}   // reversed short links for the sales rail: /womensales, /women-sales, /women sales, /women/sales, /mensales ...
+      const m = /^\/(women|woman|men|man)(?:s|swear)?[-_\/ ]?sales?\/?$/i.exec(pth);
+      if (m) return Response.redirect(u.origin + "/?go=" + (/^wom/i.test(m[1]) ? "women" : "men") + "-sales", 302); }
     const handlerIterator = executeRequest(request);
     let data = {};
     let isFailOpen = false;
