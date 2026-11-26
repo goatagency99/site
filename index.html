@@ -1380,6 +1380,7 @@
 </style>
 <script src="/assets/catalog.js?v=20261114rail"></script>
 <script src="/assets/women-sale-rail.js?v=32" defer></script>
+<script src="/assets/lookbook-runway.js?v=1" defer></script>
 <script>
 (() => {
   'use strict';
@@ -1770,6 +1771,7 @@
       if (active === 'tops' && gender === 'women' && sub === 'hoodies') items = [...WOMEN_HOODIES_ORDER.map(k => items.find(([x]) => x === k)).filter(Boolean), ...items.filter(([k]) => !WOMEN_HOODIES_ORDER.includes(k))];
       items = [...items.filter(([, p]) => !p.soldOut), ...items.filter(([, p]) => p.soldOut)];   // SOLD OUT pieces always last
       const show = !all && items.length > LIMIT ? items.slice(0, LIMIT) : items;
+      if (active === 'looks' && matchMedia('(max-width: 899px)').matches) { const lbr = document.createElement('div'); lbr.className = 'lbr'; lbr.dataset.gender = gender; grid.appendChild(lbr); if (window.BYM_RUNWAY) window.BYM_RUNWAY.fill(lbr); }   // phone: the lookbook runway (assets/lookbook-runway.js) above the LOOK cards
       show.forEach(([k, p]) => grid.appendChild(card(k, p, active)));
       const pruneScan = () => { if (gender === 'women' && active in SCAN_START) [...grid.querySelectorAll(':scope > .shop__card')].forEach((c, i) => { const pat = (Math.floor(i / 6) + SCAN_START[active]) % 2 ? SCAN_B : SCAN_A; if (!pat.includes(i % 6)) c.querySelectorAll('.scanfx').forEach(x => x.remove()); }); };
       pruneScan();
