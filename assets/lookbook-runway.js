@@ -19,6 +19,7 @@
     '.lbr:empty,.lbr[hidden]{display:none}',
     '.lbr--home{display:flow-root;margin:0;width:100%;overflow:visible;padding-top:0}',
     '.lbr--home .lbr__stage{overflow:hidden}',
+    '.lbr--home::before{content:"";position:absolute;left:0;right:0;top:-86px;height:86px;background:linear-gradient(180deg,rgba(243,243,242,0) 0%,rgba(243,243,242,.55) 62%,#f3f3f2 100%);pointer-events:none;z-index:1}',   /* soft fade from the colourful section 1 into the grey of section 2 */
     '.lbr--home .lbr__head{padding-top:0}',
     '.lbr--home .lbr__g{position:relative;z-index:5;justify-content:center;gap:34px;margin:-27px 0 0}',
     '.lbr--home .lbr__g button{font-size:15px;letter-spacing:.24em;padding:0 2px 13px;border-bottom-width:1.5px;color:rgba(17,17,17,.42)}',
