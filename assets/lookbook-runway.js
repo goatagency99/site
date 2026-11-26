@@ -3,7 +3,8 @@
    Tap the middle model -> that look's product page (buy the whole outfit). Tap a neighbour -> it slides to the middle.
    Under the models: the look's name and its pieces (each one opens its own product page).
    Cut-out photos: assets/img/lookbook-cut/<look key>.webp (all the same height, feet at the bottom edge).
-   index.html puts <div class="lbr" data-gender="women|men"> at the top of the LOOKBOOK tab; fill() builds it. */
+   index.html has <section class="lbr lbr--home" id="runway" data-gender="women" data-switch="1"> as section 2 (after the music); fill() builds it.
+   data-switch adds WOMEN / MEN buttons under the title. Phone only for now (desktop shows nothing until its own design). */
 (function () {
   'use strict';
   if (window.BYM_RUNWAY) return;
@@ -16,12 +17,16 @@
   var CSS = [
     '.lbr{grid-column:1/-1;position:relative;width:100vw;margin:0 0 6px calc(50% - 50vw);padding:2px 0 18px;background:linear-gradient(180deg,#f3f3f2 0%,#f6f6f5 62%,#fff 100%);color:#111;overflow:hidden;font-family:"Jost","Helvetica Neue",Helvetica,Arial,sans-serif;user-select:none;-webkit-user-select:none}',
     '.lbr:empty,.lbr[hidden]{display:none}',
+    '.lbr--home{margin:0;width:100%}',
+    '.lbr__g{display:flex;gap:22px;margin-top:12px}',
+    '.lbr__g button{padding:3px 0;border:0;border-bottom:1px solid transparent;background:none;font:inherit;font-size:11px;letter-spacing:.2em;color:#9a9a96;cursor:pointer}',
+    '.lbr__g button[aria-pressed="true"]{color:#111;border-bottom-color:#111}',
     '@media(min-width:900px){.lbr{display:none}}',
     '.lbr__head{padding:18px 18px 0}',
     '.lbr__title{margin:0;font-size:27px;font-weight:400;letter-spacing:-.01em;line-height:1.1}',
     '.lbr__sub{margin:6px 0 0;font-size:12px;color:#6f6f6f;letter-spacing:.01em}',
     '.lbr__stage{position:relative;height:min(60svh,540px);margin-top:8px;touch-action:pan-y}',
-    '.lbr__m{position:absolute;left:50%;bottom:34px;height:calc(100% - 46px);transform-origin:50% 100%;will-change:transform,filter;cursor:pointer;-webkit-tap-highlight-color:transparent}',
+    '.lbr__m{position:absolute;left:50%;bottom:34px;height:calc(100% - 46px);transform-origin:50% 62%;will-change:transform,filter;cursor:pointer;-webkit-tap-highlight-color:transparent}',
     '.lbr__m img{display:block;height:100%;width:auto;-webkit-user-drag:none;pointer-events:none;-webkit-box-reflect:below 1px linear-gradient(transparent 88%,rgba(255,255,255,.16))}',
     '.lbr__floor{position:absolute;left:0;right:0;bottom:0;height:46px;background:linear-gradient(180deg,rgba(0,0,0,.035),rgba(0,0,0,0));pointer-events:none}',
     '.lbr__bar{position:relative;width:110px;height:2px;margin:6px auto 0;background:rgba(0,0,0,.12);border-radius:2px;overflow:hidden}',
@@ -57,19 +62,23 @@
   function fill(host) {
     if (!host || host.dataset.lbrReady === '1') return;
     if (!matchMedia(PHONE).matches) return;
+    if (host._lbrAbort) host._lbrAbort.abort();
+    var ab = host._lbrAbort = new AbortController(), sig = { signal: ab.signal };
     var gender = host.dataset.gender === 'men' ? 'men' : 'women';
     var L = looksFor(gender); if (L.length < 2) { host.hidden = true; return; }
     host.dataset.lbrReady = '1';
     if (!document.getElementById('lbr-css')) { var st = document.createElement('style'); st.id = 'lbr-css'; st.textContent = CSS; document.head.appendChild(st); }
     var C = window.BYMARCCC_CATALOG.CATALOG, N = L.length;
-    host.innerHTML = '<div class="lbr__head"><h3 class="lbr__title">' + (gender === 'men' ? 'Men' : 'Women') + ' Lookbook</h3>' +
-      '<p class="lbr__sub">' + N + ' looks, styled head to toe. Tap the look to shop it.</p></div>' +
+    host.innerHTML = '<div class="lbr__head"><h3 class="lbr__title">' + (host.dataset.switch ? 'Lookbook' : (gender === 'men' ? 'Men' : 'Women') + ' Lookbook') + '</h3>' +
+      '<p class="lbr__sub">' + N + ' looks, styled head to toe. Tap the look to shop it.</p>' +
+      (host.dataset.switch ? '<nav class="lbr__g" aria-label="Lookbook"><button type="button" data-g="women" aria-pressed="' + (gender === 'women') + '">WOMEN</button><button type="button" data-g="men" aria-pressed="' + (gender === 'men') + '">MEN</button></nav>' : '') + '</div>' +
       '<div class="lbr__stage" aria-roledescription="carousel" aria-label="Lookbook"><div class="lbr__floor"></div></div>' +
       '<div class="lbr__bar"><div class="lbr__fill"></div></div>' +
       '<div class="lbr__info"><h4 class="lbr__name"></h4><span class="lbr__count"></span></div><div class="lbr__items"></div>';
     var stage = host.querySelector('.lbr__stage'), fillEl = host.querySelector('.lbr__fill'), nameEl = host.querySelector('.lbr__name'),
       countEl = host.querySelector('.lbr__count'), itemsEl = host.querySelector('.lbr__items');
     fillEl.style.width = (100 / N) + '%';
+    host.querySelectorAll('.lbr__g button').forEach(function (bt) { bt.addEventListener('click', function () { if (bt.dataset.g === gender) return; if (raf) cancelAnimationFrame(raf); host.dataset.gender = bt.dataset.g; host.dataset.lbrReady = ''; fill(host); }); });
 
     var els = L.map(function (x, i) {
       var b = document.createElement('div'); b.className = 'lbr__m'; b.setAttribute('role', 'button'); b.tabIndex = 0;
@@ -91,11 +100,11 @@
         var d = wrapD(i - pos), ad = Math.abs(d);
         if (ad > 2.6) { b.style.visibility = 'hidden'; return; }
         b.style.visibility = '';
-        var k = Math.min(1, ad), sc = 1 - 0.24 * k - 0.08 * Math.max(0, ad - 1);
+        var k = Math.min(1, ad), sc = 1 - 0.14 * k - 0.07 * Math.max(0, ad - 1);   // neighbours only a little smaller, and lifted (scaled around the hips, not the feet)
         var w = h * CUT[L[i].key];
         var x = Math.sign(d) * (k * step + Math.max(0, ad - 1) * step * 0.58);
         b.style.transform = 'translate3d(' + (x - w / 2) + 'px,0,0) scale(' + sc + ')';
-        b.style.filter = k > 0.02 ? 'blur(' + (k * 3.2 + Math.max(0, ad - 1) * 1.5).toFixed(2) + 'px)' : 'none';
+        b.style.filter = k > 0.02 ? 'blur(' + (k * 2.8 + Math.max(0, ad - 1) * 1.4).toFixed(2) + 'px)' : 'none';
         b.style.opacity = String(1 - 0.12 * k - 0.2 * Math.max(0, ad - 1));
         b.style.zIndex = String(100 - Math.round(ad * 10));
       });
@@ -145,9 +154,9 @@
     stage.addEventListener('touchmove', function (e) { var t = e.touches[0]; if (move(t.clientX, t.clientY) && e.cancelable) e.preventDefault(); }, { passive: false });
     stage.addEventListener('touchend', end); stage.addEventListener('touchcancel', end);
     stage.addEventListener('pointerdown', function (e) { if (e.pointerType === 'mouse') start(e.clientX, e.clientY); });
-    window.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse' && drag) move(e.clientX, e.clientY); });
-    window.addEventListener('pointerup', function (e) { if (e.pointerType === 'mouse') end(); });
-    window.addEventListener('resize', function () { if (host.isConnected) paint(); });
+    window.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse' && drag) move(e.clientX, e.clientY); }, sig);
+    window.addEventListener('pointerup', function (e) { if (e.pointerType === 'mouse') end(); }, sig);
+    window.addEventListener('resize', function () { if (host.isConnected) paint(); }, sig);
     paint();
   }
 

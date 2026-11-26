@@ -1012,7 +1012,9 @@
   </div>
 </section>
 
-
+<!-- SECTION 2 — the lookbook runway (phone): models side by side, swipe, tap to shop the look (assets/lookbook-runway.js) -->
+<section class="lbr lbr--home" id="runway" data-gender="women" data-switch="1" aria-label="bymarccc lookbook"></section>
+<script>window.BYM_RUNWAY && window.BYM_RUNWAY.fillAll();</script>
 
 <!-- =====================================================================
      SECTION 3 — Collections (Acne-style tabs + product grid), data from catalog.js
@@ -1380,7 +1382,7 @@
 </style>
 <script src="/assets/catalog.js?v=20261114rail"></script>
 <script src="/assets/women-sale-rail.js?v=32" defer></script>
-<script src="/assets/lookbook-runway.js?v=1" defer></script>
+<script src="/assets/lookbook-runway.js?v=2" defer></script>
 <script>
 (() => {
   'use strict';
@@ -1771,7 +1773,6 @@
       if (active === 'tops' && gender === 'women' && sub === 'hoodies') items = [...WOMEN_HOODIES_ORDER.map(k => items.find(([x]) => x === k)).filter(Boolean), ...items.filter(([k]) => !WOMEN_HOODIES_ORDER.includes(k))];
       items = [...items.filter(([, p]) => !p.soldOut), ...items.filter(([, p]) => p.soldOut)];   // SOLD OUT pieces always last
       const show = !all && items.length > LIMIT ? items.slice(0, LIMIT) : items;
-      if (active === 'looks' && matchMedia('(max-width: 899px)').matches) { const lbr = document.createElement('div'); lbr.className = 'lbr'; lbr.dataset.gender = gender; grid.appendChild(lbr); if (window.BYM_RUNWAY) window.BYM_RUNWAY.fill(lbr); }   // phone: the lookbook runway (assets/lookbook-runway.js) above the LOOK cards
       show.forEach(([k, p]) => grid.appendChild(card(k, p, active)));
       const pruneScan = () => { if (gender === 'women' && active in SCAN_START) [...grid.querySelectorAll(':scope > .shop__card')].forEach((c, i) => { const pat = (Math.floor(i / 6) + SCAN_START[active]) % 2 ? SCAN_B : SCAN_A; if (!pat.includes(i % 6)) c.querySelectorAll('.scanfx').forEach(x => x.remove()); }); };
       pruneScan();
@@ -1789,7 +1790,7 @@
       b.setAttribute('aria-selected', String(c.key === active));
       b.addEventListener('click', () => { active = c.key; sub = 'all'; subFor = active; section.querySelectorAll('.shop__tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.key === active))); render(); { const tr = tabs.getBoundingClientRect(), gr = grid.getBoundingClientRect(), mobile = matchMedia('(max-width: 899px)').matches, smooth = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'; if (mobile && tr.top > 10) window.scrollTo({ top: scrollY + tr.top - 8, behavior: smooth }); /* tabs not pinned yet (tapped from higher up the page, e.g. the hero): lock them to the sticky top now, instead of leaving the old section peeking above */ else if (tr.top <= 10 && gr.top < tr.bottom) window.scrollTo({ top: scrollY + gr.top - tr.bottom - 8 }); } /* tabs stuck at the top: show the new category from its first product */  b.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' }); });
       tabBtns.push(b);
-      if (c.key === 'looks') { b.classList.add('shop__tab--look'); const row = document.createElement('div'); row.className = 'shop__lookrow'; row.appendChild(b); tabs.parentNode.insertBefore(row, tabs); }   // SHOP THE LOOK: its own small line between MEN/WOMEN and the other tabs
+      if (c.key === 'looks') { const sl = tabs.querySelector('.shop__tab[data-key="sales"]'); if (sl) sl.after(b); else tabs.appendChild(b); }   // LOOKBOOK: a normal tab in the row, right after SALES
       else tabs.appendChild(b);
     });
     { const sb = document.createElement('button'); sb.type = 'button'; sb.className = 'shop__psearch'; sb.setAttribute('aria-label', 'Search'); sb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5l5 5"/></svg>'; sb.addEventListener('click', () => window.BMP_OPEN && window.BMP_OPEN()); const pill = document.createElement('div'); pill.className = 'shop__pill'; tabs.parentNode.insertBefore(pill, tabs); pill.append(tabs, sb); }   /* phone: round search inside the top pill, on the right */
@@ -5194,7 +5195,7 @@ html.is-vp-drag, html.is-vp-drag * { -webkit-user-select: none !important; user-
   // silently corrupted Back/Forward after 2+ hops. Guard it like the
   // codebase's other "run once" scripts.
   if (window.BYM_NAV) return;
-  const CONTENT_IDS = ['play','zebra','shop','shopCustomize','crumble','shopWomen','reel','fp','fpTab','siteFooter','bagPill','pdpHeader','backdrop','ctlDrawer','cart','wl','qa','sizeModal','coGrid','coThankYou','membersMain']; // coGrid/coThankYou: checkout.html's two content roots. membersMain: members.html's single content root. shopCustomize: the homepage's CUSTOMIZE tab section, missing from this list until now (harmless while index.html was never a navigate() target itself, but broke its own mount() call once navigating TO index.html via SPA became possible). All added so BYM_NAV can splice those pages in like a product page.
+  const CONTENT_IDS = ['play','runway','zebra','shop','shopCustomize','crumble','shopWomen','reel','fp','fpTab','siteFooter','bagPill','pdpHeader','backdrop','ctlDrawer','cart','wl','qa','sizeModal','coGrid','coThankYou','membersMain']; // coGrid/coThankYou: checkout.html's two content roots. membersMain: members.html's single content root. shopCustomize: the homepage's CUSTOMIZE tab section, missing from this list until now (harmless while index.html was never a navigate() target itself, but broke its own mount() call once navigating TO index.html via SPA became possible). All added so BYM_NAV can splice those pages in like a product page.
   const isContent = el => el.nodeType === 1 && (
     (el.id && CONTENT_IDS.indexOf(el.id) !== -1) ||
     (el.tagName === 'MAIN' && el.classList.contains('pdp-page'))

@@ -511,7 +511,7 @@ body.is-custom-bag-page #gallery { display: none; }
 .pdp-gallery.is-vert .pdp-gallery__slide { flex: 0 0 100%; width: 100%; }
 .pdp-gallery.is-vert .pdp-bars { display: flex; flex-direction: column; gap: 8px; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); z-index: 3; left: auto; bottom: auto; }
 .pdp-gallery.is-vert .pdp-bars i { width: 6px; height: 6px; border-radius: 50%; }   /* dots, not dashes */
-html.bym-memlock #pPrice, html.bym-memlock #barPrice { display: none !important; }   /* members-only piece: price shows after sign-in */
+.pdp-page.bym-memlock #pPrice, .pdp-page.bym-memlock #barPrice { display: none !important; }   /* members-only piece: price shows after sign-in */
 .pdp-gallery__peek { position: absolute; inset: 0; z-index: 2; background: var(--gbg, #f0f0f0); pointer-events: none; }
 .pdp-gallery__peek[hidden] { display: none; }
 .pdp-gallery__peek img { width: 100%; height: 100%; object-fit: contain; display: block; }
@@ -1096,7 +1096,7 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
   const { CATALOG, MODEL, REVIEWS, ONE_SIZE } = window.BYMARCCC_CATALOG;
   const KEY = ((new URLSearchParams(location.search).get('p') || (location.hash.match(/^#p=([\w-]+)/) || [])[1] || 'skinny').toLowerCase()).replace(/^w-sporty-top-ecru$/, 'w-sporty-top-ivory');   // old link → renamed key
   const PRODUCT = Object.assign({ model: MODEL, reviews: REVIEWS, unavailable: [], details: [], collections: [], description: '' }, CATALOG[KEY] || CATALOG.skinny);
-  document.documentElement.classList.toggle('bym-memlock', !!PRODUCT.membersOnly && !window.__bymMeOK);
+  document.documentElement.classList.remove('bym-memlock'); document.querySelector('main.pdp-page')?.classList.toggle('bym-memlock', !!PRODUCT.membersOnly && !window.__bymMeOK);   // on this page's <main> (the router keeps each page): a members-only look must not hide the price of the next page
   // BABY TOP family (one product per colour): SSENSE-style page — photos swipe up/down, colours in a strip under the photo
   const BABY_FAMILY = [['w-white-baby-top-1', 'White'], ['w-pink-baby-top', 'Pink'], ['w-fuchsia-baby-top', 'Fuchsia'], ['w-blue-baby-top', 'Blue'], ['w-red-baby-top', 'Red'], ['w-white-baby-top', 'Black'], ['w-burgundy-baby-top', 'Burgundy']];
   // ZIP SETS: the same SSENSE-style colour strip (Pink · Black · Grey) on the zip hoodies and pants
@@ -1295,6 +1295,8 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
       const N = 24, c = document.createElement('canvas'); c.width = 2; c.height = N; const x = c.getContext('2d', { willReadFrequently: true }); const w = img.naturalWidth, h = img.naturalHeight;
       x.drawImage(img, 0, 0, w * .03, h, 0, 0, 1, N); x.drawImage(img, w * .97, 0, w * .03, h, 1, 0, 1, N);
       const d = x.getImageData(0, 0, 2, N).data, stops = [];
+      // iPhone can hand back an empty (transparent) canvas when the photo is not decoded yet: that read as a "dark" edge and cropped the photo (heads cut off). Wait for the decode and read again.
+      if ((d[3] < 250 || d[7] < 250 || d[d.length - 1] < 250) && !s.dataset.sampled) { s.dataset.sampled = '1'; (img.decode ? img.decode() : Promise.resolve()).then(() => setTimeout(sample, 30), () => setTimeout(sample, 400)); return; }
       // busy edges (a close-up with print/fabric to the border, not a studio background): fill the frame instead of side bars
       { const cs = o => d[o] + d[o + 1] + d[o + 2], bg = (cs(0) + cs(4)) / 2; let busy = 0;
         for (let k = 0; k < N; k++) { if (Math.abs(cs(k * 8) - bg) > 60 || Math.abs(cs(k * 8 + 4) - bg) > 60) busy++; }
@@ -1711,7 +1713,7 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
   (window.__bymMe = fetch('/api/account?action=me', { credentials: 'same-origin' }).then(r => r.ok ? r.json() : null).catch(() => null)).then(j => {
     WL_ME = j && j.profile ? j.profile : null;
     window.__bymMeOK = !!WL_ME;
-    document.documentElement.classList.toggle('bym-memlock', !!PRODUCT.membersOnly && !WL_ME);
+    document.querySelector('main.pdp-page')?.classList.toggle('bym-memlock', !!PRODUCT.membersOnly && !WL_ME);
     if (WL_ME) { const ab = document.getElementById('addBtn'); if (ab && /^MEMBERS ONLY/.test(ab.textContent)) ab.textContent = 'ADD TO BAG'; }
     { const d = $('pdpAcctDot'); if (d) d.hidden = !WL_ME; }   // small dot on the account icon = signed in
     if (WL_ME) { const keys = (JSON.parse(localStorage.getItem('bym.wishlist') || '[]') || []).map(x => x && x.key).filter(Boolean); if (keys.length) wlApi({ merge: keys }); }
@@ -4261,7 +4263,7 @@ html.is-vp-drag, html.is-vp-drag * { -webkit-user-select: none !important; user-
   // silently corrupted Back/Forward after 2+ hops. Guard it like the
   // codebase's other "run once" scripts.
   if (window.BYM_NAV) return;
-  const CONTENT_IDS = ['play','zebra','shop','shopCustomize','crumble','shopWomen','reel','fp','fpTab','siteFooter','bagPill','pdpHeader','backdrop','ctlDrawer','cart','wl','qa','sizeModal','coGrid','coThankYou','membersMain']; // coGrid/coThankYou: checkout.html's two content roots. membersMain: members.html's single content root. shopCustomize: the homepage's CUSTOMIZE tab section, missing from this list until now (harmless while index.html was never a navigate() target itself, but broke its own mount() call once navigating TO index.html via SPA became possible). All added so BYM_NAV can splice those pages in like a product page.
+  const CONTENT_IDS = ['play','runway','zebra','shop','shopCustomize','crumble','shopWomen','reel','fp','fpTab','siteFooter','bagPill','pdpHeader','backdrop','ctlDrawer','cart','wl','qa','sizeModal','coGrid','coThankYou','membersMain']; // coGrid/coThankYou: checkout.html's two content roots. membersMain: members.html's single content root. shopCustomize: the homepage's CUSTOMIZE tab section, missing from this list until now (harmless while index.html was never a navigate() target itself, but broke its own mount() call once navigating TO index.html via SPA became possible). All added so BYM_NAV can splice those pages in like a product page.
   const isContent = el => el.nodeType === 1 && (
     (el.id && CONTENT_IDS.indexOf(el.id) !== -1) ||
     (el.tagName === 'MAIN' && el.classList.contains('pdp-page'))

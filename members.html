@@ -1772,7 +1772,7 @@ html.is-vp-drag, html.is-vp-drag * { -webkit-user-select: none !important; user-
   // silently corrupted Back/Forward after 2+ hops. Guard it like the
   // codebase's other "run once" scripts.
   if (window.BYM_NAV) return;
-  const CONTENT_IDS = ['play','zebra','shop','shopCustomize','crumble','shopWomen','reel','fp','fpTab','siteFooter','bagPill','pdpHeader','backdrop','ctlDrawer','cart','wl','qa','sizeModal','coGrid','coThankYou','membersMain']; // coGrid/coThankYou: checkout.html's two content roots. membersMain: members.html's single content root. shopCustomize: the homepage's CUSTOMIZE tab section, missing from this list until now (harmless while index.html was never a navigate() target itself, but broke its own mount() call once navigating TO index.html via SPA became possible). All added so BYM_NAV can splice those pages in like a product page.
+  const CONTENT_IDS = ['play','runway','zebra','shop','shopCustomize','crumble','shopWomen','reel','fp','fpTab','siteFooter','bagPill','pdpHeader','backdrop','ctlDrawer','cart','wl','qa','sizeModal','coGrid','coThankYou','membersMain']; // coGrid/coThankYou: checkout.html's two content roots. membersMain: members.html's single content root. shopCustomize: the homepage's CUSTOMIZE tab section, missing from this list until now (harmless while index.html was never a navigate() target itself, but broke its own mount() call once navigating TO index.html via SPA became possible). All added so BYM_NAV can splice those pages in like a product page.
   const isContent = el => el.nodeType === 1 && (
     (el.id && CONTENT_IDS.indexOf(el.id) !== -1) ||
     (el.tagName === 'MAIN' && el.classList.contains('pdp-page'))
