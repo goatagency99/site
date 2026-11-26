@@ -1382,7 +1382,7 @@
 </style>
 <script src="/assets/catalog.js?v=20261114rail"></script>
 <script src="/assets/women-sale-rail.js?v=32" defer></script>
-<script src="/assets/lookbook-runway.js?v=2" defer></script>
+<script src="/assets/lookbook-runway.js?v=3" defer></script>
 <script>
 (() => {
   'use strict';
@@ -1685,7 +1685,7 @@
   function mount(section, collections, gender) {
     const tabs = section.querySelector('.shop__tabs'), grid = section.querySelector('.shop__grid');
     let active = collections[0].key;
-    const LIMIT = matchMedia('(min-width: 900px)').matches ? 10 : 6;   // desktop: 2 rows of 5, then LOAD MORE
+    const LIMIT = matchMedia('(min-width: 900px)').matches ? 10 : (gender === 'women' ? 4 : 6);   // desktop: 2 rows of 5, then LOAD MORE · phone: women 4, men 6
     const tabBtns = [];
     let sub = 'all', subFor = null;   // TOPS → HOODIES · T-SHIRTS · … sub-filter (resets when the tab changes)
     const render = (all = false) => {
