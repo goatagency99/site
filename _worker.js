@@ -2755,6 +2755,16 @@ async function accountApi(request) {
   const b = request.method === "POST" ? (await readJson(request)) || {} : {};
   const action = String(b.action || url.searchParams.get("action") || "me");
   if (request.method === "POST" && !checkOrigin(request)) return json(403, { error: "Forbidden origin" });
+  // ---- bymarccc app: e-mail given at the "I am human" intro → customer record (shows in GOATIFY → Customers) ----
+  if (action === "app-signup") {
+    if (!rateLimit(request, 10)) return json(429, { error: "Too many attempts. Please wait a minute." });
+    const email = normEmail(b.email);
+    if (!email || email.length > 254 || !/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(email)) return json(400, { error: "INVALID_EMAIL" });
+    const c = await db.prepare("SELECT prefs FROM acct_customers WHERE email = ?1").bind(email).first();
+    if (!c) await db.prepare("INSERT INTO acct_customers (email, name, created_at, ref_code, prefs) VALUES (?1,?2,?3,?4,?5)").bind(email, "", acctNow(), acctRand(7), JSON.stringify({ news: true, drops: true, source: "app", app_signup_at: acctNow() })).run();
+    return json(200, { ok: true, existing: !!c });
+  }
+
   // ---- sign in: e-mail → 6-digit code → session ----
   if (action === "start") {
     if (!rateLimit(request, 6)) return json(429, { error: "Too many attempts. Please wait a minute." });
