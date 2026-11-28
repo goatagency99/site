@@ -10,8 +10,9 @@
   if (window.BYM_RUNWAY) return;
 
   // look key -> width / height of its cut-out (a look shows up here only once its cut-out exists)
-  var CUT = {"look-2-tech-set":0.3308,"look-w14-art-set":0.2683,"look-w15-crochet-set":0.2692,"look-w16-satin-set":0.3033,"look-w13-black-wind-set":0.3375,"look-w12-hot-pink-zip-set":0.3292,"look-7-hot-pink-zip-set":0.3317,"look-w11-red-zip-set":0.3267,"look-6-red-zip-set":0.3467,"look-w3-delulu-blazer-set":0.2817,"look-w7-muse-blazer-set":0.285,"look-w8-lace-set":0.2633,"look-w5-black-charm-set":0.2733,"look-w6-black-zip-set":0.3217,"look-w7-grey-zip-set":0.3325,"look-w4-burgundy-charm-set":0.2658,"look-w3-sporty-set":0.4325,"look-3-pink-zip-set":0.3525,"look-4-black-zip-set":0.3533,"look-5-grey-zip-set":0.3525,"look-2-blue-zip-set":0.3342,"look-w2-blue-zip-set":0.3392,"look-1-tech-set":0.3492,"look-w1-logo-set":0.3433,"look-w1-burgundy-baby-wind-set":0.2758};
+  var CUT = {"look-2-tech-set":0.3308,"look-w14-art-set":0.2683,"look-w15-crochet-set":0.2692,"look-w16-satin-set":0.3,"look-w13-black-wind-set":0.3375,"look-w12-hot-pink-zip-set":0.3292,"look-7-hot-pink-zip-set":0.3317,"look-w11-red-zip-set":0.3267,"look-6-red-zip-set":0.3467,"look-w3-delulu-blazer-set":0.2817,"look-w7-muse-blazer-set":0.285,"look-w8-lace-set":0.2633,"look-w5-black-charm-set":0.2733,"look-w6-black-zip-set":0.3217,"look-w7-grey-zip-set":0.3325,"look-w4-burgundy-charm-set":0.2658,"look-w3-sporty-set":0.4325,"look-3-pink-zip-set":0.3525,"look-4-black-zip-set":0.3533,"look-5-grey-zip-set":0.3525,"look-2-blue-zip-set":0.3342,"look-w2-blue-zip-set":0.3392,"look-1-tech-set":0.3492,"look-w1-logo-set":0.3433,"look-w1-burgundy-baby-wind-set":0.2758,"look-w19-black-leggings-set":0.27,"look-w20-walking-art-blue-set":0.2733,"look-w21-ivory-sporty-set":0.2667,"look-w22-walking-art-black-set":0.2708,"look-w18-love-authenticity-set":0.2842};
   var DIR = 'assets/img/lookbook-cut/';
+  var CUTV = { 'look-w16-satin-set': 2 };   // cut-outs that were replaced by a new photo: a version number so phones drop the old cached file
   var PHONE = '(max-width: 899px)';
 
   var CSS = [
@@ -88,7 +89,7 @@
     var els = L.map(function (x, i) {
       var b = document.createElement('div'); b.className = 'lbr__m'; b.setAttribute('role', 'button'); b.tabIndex = 0;
       b.setAttribute('aria-label', x.p.title);
-      var im = new Image(); im.alt = ''; im.decoding = 'async'; im.draggable = false; if (i > 3) im.loading = 'lazy'; im.src = DIR + x.key + '.webp';
+      var im = new Image(); im.alt = ''; im.decoding = 'async'; im.draggable = false; if (i > 3) im.loading = 'lazy'; im.src = DIR + x.key + '.webp' + (CUTV[x.key] ? '?v=' + CUTV[x.key] : '');
       b.appendChild(im); stage.appendChild(b);
       b.addEventListener('click', function () { if (moved) return; if (i === idxOf(pos)) go('bymarccc-product.html?p=' + x.key); else snapTo(Math.round(pos) + wrapD(i - pos)); });
       b.addEventListener('keydown', function (e) { if (e.key === 'Enter') go('bymarccc-product.html?p=' + x.key); });
