@@ -10,9 +10,9 @@
   if (window.BYM_RUNWAY) return;
 
   // look key -> width / height of its cut-out (a look shows up here only once its cut-out exists)
-  var CUT = {"look-2-tech-set":0.3308,"look-w14-art-set":0.2683,"look-w15-crochet-set":0.2692,"look-w16-satin-set":0.3,"look-w13-black-wind-set":0.3375,"look-w12-hot-pink-zip-set":0.3292,"look-7-hot-pink-zip-set":0.3317,"look-w11-red-zip-set":0.3267,"look-6-red-zip-set":0.3467,"look-w3-delulu-blazer-set":0.2817,"look-w7-muse-blazer-set":0.285,"look-w8-lace-set":0.2633,"look-w5-black-charm-set":0.2733,"look-w6-black-zip-set":0.3217,"look-w7-grey-zip-set":0.3325,"look-w4-burgundy-charm-set":0.2658,"look-w3-sporty-set":0.4325,"look-3-pink-zip-set":0.3525,"look-4-black-zip-set":0.3533,"look-5-grey-zip-set":0.3525,"look-2-blue-zip-set":0.3342,"look-w2-blue-zip-set":0.3392,"look-1-tech-set":0.3492,"look-w1-logo-set":0.3433,"look-w1-burgundy-baby-wind-set":0.2758,"look-w19-black-leggings-set":0.27,"look-w20-walking-art-blue-set":0.2733,"look-w21-ivory-sporty-set":0.2667,"look-w22-walking-art-black-set":0.2708,"look-w18-love-authenticity-set":0.2842};
+  var CUT = {"look-2-tech-set":0.3308,"look-w14-art-set":0.2692,"look-w15-crochet-set":0.16,"look-w16-satin-set":0.3,"look-w13-black-wind-set":0.3375,"look-w12-hot-pink-zip-set":0.3292,"look-7-hot-pink-zip-set":0.3317,"look-w11-red-zip-set":0.3267,"look-6-red-zip-set":0.3467,"look-w3-delulu-blazer-set":0.2817,"look-w7-muse-blazer-set":0.285,"look-w8-lace-set":0.2633,"look-w5-black-charm-set":0.2733,"look-w6-black-zip-set":0.3217,"look-w7-grey-zip-set":0.3325,"look-w4-burgundy-charm-set":0.2658,"look-w3-sporty-set":0.4325,"look-3-pink-zip-set":0.3525,"look-4-black-zip-set":0.3533,"look-5-grey-zip-set":0.3525,"look-2-blue-zip-set":0.3342,"look-w2-blue-zip-set":0.3392,"look-1-tech-set":0.3492,"look-w1-logo-set":0.3433,"look-w1-burgundy-baby-wind-set":0.2758,"look-w19-black-leggings-set":0.27,"look-w20-walking-art-blue-set":0.2733,"look-w21-ivory-sporty-set":0.2667,"look-w22-walking-art-black-set":0.2708,"look-w18-love-authenticity-set":0.2842,"look-w23-love-authenticity-black-set":0.2817};
   var DIR = 'assets/img/lookbook-cut/';
-  var CUTV = { 'look-w16-satin-set': 2 };   // cut-outs that were replaced by a new photo: a version number so phones drop the old cached file
+  var CUTV = { 'look-w16-satin-set': 2, 'look-w14-art-set': 2, 'look-w15-crochet-set': 2 };   // cut-outs that were replaced by a new photo: a version number so phones drop the old cached file
   var PHONE = '(max-width: 899px)';
 
   var CSS = [
@@ -124,8 +124,9 @@
       var items = (p.lookItems || []).map(function (k) { return [k, C[k]]; }).filter(function (e) { return e[1] && e[1].gallery && e[1].gallery.length; });
       countEl.textContent = items.length ? items.length + (items.length === 1 ? ' PIECE' : ' PIECES') : '';
       itemsEl.innerHTML = items.map(function (e) {
-        var q = e[1], g = q.gallery[0], src = g.src || g, price = typeof q.salePrice === 'number' ? q.salePrice : q.price;
-        return '<a class="lbr__it" href="bymarccc-product.html?p=' + encodeURIComponent(e[0]) + '"><img src="' + esc(src) + '" alt="" loading="lazy" decoding="async">' +
+        var q = e[1], col = (p.lookColour || {})[e[0]], ci = col && q.slideColours ? q.slideColours.indexOf(col) : -1;   // a look can use one colour of a piece (e.g. the black tee)
+        var g = q.gallery[ci > 0 ? ci : 0], src = g.src || g, price = typeof q.salePrice === 'number' ? q.salePrice : q.price;
+        return '<a class="lbr__it" href="bymarccc-product.html?p=' + encodeURIComponent(e[0]) + (col ? '&c=' + encodeURIComponent(col) : '') + '"><img src="' + esc(src) + '" alt="" loading="lazy" decoding="async">' +
           '<span><b>' + esc(q.title) + '</b><i>' + (typeof price === 'number' ? esc(money(price)) : '') + '</i></span><em aria-hidden="true">+</em></a>';
       }).join('');
       itemsEl.scrollLeft = 0;

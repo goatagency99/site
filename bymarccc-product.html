@@ -2392,7 +2392,7 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
     const items = (PRODUCT.lookItems || []).filter(k => CATALOG[k]);
     if (!items.length) return;
     const nice = t => String(t).toLowerCase().replace(/(^|\s|-)\S/g, c => c.toUpperCase());
-    const links = items.map(k => `<a href="bymarccc-product.html?p=${encodeURIComponent(k)}">${nice(CATALOG[k].title)}</a>`).join(' <span>&amp;</span> ');
+    const links = items.map(k => `<a href="bymarccc-product.html?p=${encodeURIComponent(k)}${(PRODUCT.lookColour || {})[k] ? '&c=' + encodeURIComponent(PRODUCT.lookColour[k]) : ''}">${nice(CATALOG[k].title)}</a>`).join(' <span>&amp;</span> ');
     const el = document.createElement('div'); el.className = 'pdp-lookof'; el.id = 'pdpLookOf';
     el.innerHTML = `<p class="pdp-lookof__pieces">${links}</p><p class="pdp-lookof__note">The complete look at a privileged price.</p>`;
     const sizes = document.getElementById('sizes'); if (sizes && sizes.parentNode) sizes.parentNode.insertBefore(el, sizes);
@@ -2406,7 +2406,7 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
     (PRODUCT.lookItems || []).filter(k => CATALOG[k]).forEach(k => {
       const p = CATALOG[k], sz = ((p.chart && p.chart.sizes) || []).map(x => x.size);
       if (!sz.length || p.noSize || (p.chart && p.chart.category === 'one-size') || (p.collections || []).includes('accessories')) return;
-      const dz = (PRODUCT.lookDesign || {})[k]; rows.push({ name: (PRODUCT.lookNames || {})[k] || nice(p.title), sizes: sz, href: 'bymarccc-product.html?p=' + encodeURIComponent(k) + (dz ? '&d=' + encodeURIComponent(dz) : '') });
+      const dz = (PRODUCT.lookDesign || {})[k]; rows.push({ name: (PRODUCT.lookNames || {})[k] || nice(p.title), sizes: sz, href: 'bymarccc-product.html?p=' + encodeURIComponent(k) + (dz ? '&d=' + encodeURIComponent(dz) : '') + ((PRODUCT.lookColour || {})[k] ? '&c=' + encodeURIComponent(PRODUCT.lookColour[k]) : '') });
     });
     (PRODUCT.lookExtra || []).forEach(n => rows.push({ name: n, sizes: (SIZE_CHART.sizes || []).map(x => x.size) }));
     if (!rows.length) return;
@@ -2592,7 +2592,7 @@ html.is-qv:not(.qv-ready) body { visibility: hidden; }
   const rail = $('popularRail');
   // Popular items: only the gender of what's in the bag (men → men, women → women; mixed → the last piece added,
   // empty bag → this page's product), burgundy pieces first, then the NEW COLLECTION. Never what's already in the bag.
-  const POP_NEW = ['m-burgundy-hoodie', 'art-jeans', 'w-burgundy-long-sleeve', 'w-burgundy-baby-top', 'w-burgundy-shoulder-bag', 'w-sporty-top-ivory', 'w-sporty-top', 'w-white-logo-windbreaker', 'w-black-logo-windbreaker', 'w-logo-vest', 'w-muse-blazer', 'w-delulu-blazer-2', 'w-logo-flare-jeans', 'w-logo-flare-leggings', 'w-logo-leggings', 'w-white-shoulder-bag'];
+  const POP_NEW = ['art-jeans', 'w-burgundy-long-sleeve', 'w-burgundy-baby-top', 'w-burgundy-shoulder-bag', 'w-sporty-top-ivory', 'w-sporty-top', 'w-white-logo-windbreaker', 'w-black-logo-windbreaker', 'w-logo-vest', 'w-muse-blazer', 'w-delulu-blazer-2', 'w-logo-flare-jeans', 'w-logo-flare-leggings', 'w-logo-leggings', 'w-white-shoulder-bag'];
   const genderOfP = p => p ? (p.genders || [p.gender || 'men']) : [];
   const keyOfLine = id => { id = String(id || ''); let best = null; Object.keys(CATALOG).forEach(k => { const pid = CATALOG[k].id; if (pid && (id === pid || id.indexOf(pid + ':') === 0) && (!best || pid.length > CATALOG[best].id.length)) best = k; }); return best; };
   function renderPopular() {
